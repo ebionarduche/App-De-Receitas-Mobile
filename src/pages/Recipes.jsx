@@ -5,7 +5,7 @@ import Header from '../components/Header';
 function Recipes() {
   return (
     <div>
-      <Header />
+      <Header title="Recipes" btnProfile btnSearch />
       <h1>Recipes</h1>
       {/* <Footer /> */}
     </div>
