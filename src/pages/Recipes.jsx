@@ -1,13 +1,12 @@
+import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 
 function Recipes() {
   return (
     <div>
-      <Header />
-      <h1>Recipes</h1>
-      <h1>Teste</h1>
-      <Footer />
+      <Header title="Recipes" btnProfile btnSearch />
+      {/* <Footer /> */}
     </div>
   );
 }
