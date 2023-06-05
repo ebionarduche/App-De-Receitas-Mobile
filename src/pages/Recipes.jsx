@@ -6,6 +6,7 @@ function Recipes() {
     <div>
       <Header />
       <h1>Recipes</h1>
+      <h1>Teste</h1>
       <Footer />
     </div>
   );
