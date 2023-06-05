@@ -6,7 +6,6 @@ function Recipes() {
   return (
     <div>
       <Header title="Recipes" btnProfile btnSearch />
-      <h1>Recipes</h1>
       {/* <Footer /> */}
     </div>
   );
