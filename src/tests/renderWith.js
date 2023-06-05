@@ -15,13 +15,13 @@ function withRouter(component, history) {
   );
 }
 
-function withRedux(component, store) {
-  return (
-    <Provider store={ store }>
-      { component }
-    </Provider>
-  );
-}
+// function withRedux(component, store) {
+//   return (
+//     <Provider store={ store }>
+//       { component }
+//     </Provider>
+//   );
+// }
 
 export function renderWithRouter(
   component,
