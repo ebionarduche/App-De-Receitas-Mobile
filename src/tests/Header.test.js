@@ -4,6 +4,8 @@ import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import App from '../App';
+import RecipesProvider from '../context/RecipesProvider';
+import SearchProvider from '../context/SearchProvider';
 
 describe('Header', () => {
   test('Verifica se os itens de header são Renderizados se é possivel interagir com eles', () => {
@@ -12,7 +14,11 @@ describe('Header', () => {
 
     render(
       <Router history={ history }>
-        <App />
+        <RecipesProvider>
+          <SearchProvider>
+            <App />
+          </SearchProvider>
+        </RecipesProvider>
       </Router>,
     );
 
