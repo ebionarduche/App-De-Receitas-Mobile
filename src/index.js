@@ -13,9 +13,7 @@ ReactDOM
       <RecipesProvider>
         <App />
       </RecipesProvider>
-      ,
-    </BrowserRouter>
-    ,
+    </BrowserRouter>,
   );
 
 // If you want your app to work offline and load faster, you can change
