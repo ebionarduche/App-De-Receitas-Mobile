@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 import React, { useContext } from 'react';
 import SearchContext from '../context/SearchContext';
-
+// Resolvendo conflitos
 function SearchBar() {
   const {
     searchApi,
@@ -29,14 +28,10 @@ function SearchBar() {
     }
   };
 
-=======
-function SearchBar() {
->>>>>>> e3232f5 (Requisito 09 Togle Search Bar)
   return (
     <div>
       <input
         type="text"
-<<<<<<< HEAD
         name="searchWord"
         id=""
         data-testid="search-input"
@@ -78,12 +73,6 @@ function SearchBar() {
       >
         Buscar
       </button>
-=======
-        name=""
-        id=""
-        data-testid="search-input"
-      />
->>>>>>> e3232f5 (Requisito 09 Togle Search Bar)
     </div>
   );
 }
