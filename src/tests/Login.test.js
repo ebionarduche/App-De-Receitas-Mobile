@@ -2,10 +2,18 @@ import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './renderWith';
 import App from '../App';
+import RecipesProvider from '../context/RecipesProvider';
+import SearchProvider from '../context/SearchProvider';
 
 describe('Testando a renderização na tela', () => {
   it('testando email, passaword e button', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <SearchProvider>
+          <App />
+        </SearchProvider>
+      </RecipesProvider>,
+    );
     expect(history.location.pathname).toBe('/');
 
     const emailInput = screen.getByTestId('email-input');
@@ -18,7 +26,13 @@ describe('Testando a renderização na tela', () => {
   });
 
   it('testando rota após clicar no button', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <SearchProvider>
+          <App />
+        </SearchProvider>
+      </RecipesProvider>,
+    );
     expect(history.location.pathname).toBe('/');
 
     const emailInput = screen.getByTestId('email-input');
