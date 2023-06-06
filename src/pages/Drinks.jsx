@@ -32,7 +32,7 @@ function Drinks() {
                 data-testid={ `${index}-card-img` }
                 src={ strDrinkThumb }
                 alt={ strDrink }
-                width="100px"
+                width="105px"
               />
             </div>)))
       }
