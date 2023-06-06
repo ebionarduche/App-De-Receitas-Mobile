@@ -6,7 +6,8 @@ import RecipesContext from './RecipesContext';
 function RecipesProvider({ children }) {
   const location = useLocation();
 
-  const [RecipesResult, SetRecipesResult] = useState({});
+  const [RecipesResult, SetRecipesResult] = useState([]);
+  const [isLoading, SetisLoading] = useState(true);
 
   const URL = location.pathname === '/meals'
     ? 'https://www.themealdb.com/api/json/v1/1/search.php?s='
@@ -17,8 +18,9 @@ function RecipesProvider({ children }) {
       try {
         const response = await fetch(URL);
         const data = await response.json();
-        SetRecipesResult(data.meals);
-        console.log(RecipesResult);
+        const result = location.pathname === '/meals' ? data.meals : data.drinks;
+        SetRecipesResult(result);
+        SetisLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -28,7 +30,8 @@ function RecipesProvider({ children }) {
 
   const initialState = useMemo(() => ({
     RecipesResult,
-  }), [RecipesResult]);
+    isLoading,
+  }), [RecipesResult, isLoading]);
 
   return (
     <RecipesContext.Provider value={ initialState }>
