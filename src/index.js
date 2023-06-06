@@ -4,13 +4,18 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import RecipesProvider from './context/RecipesProvider';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
   .render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
+    <RecipesProvider>
+
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+      ,
+    </RecipesProvider>,
   );
 
 // If you want your app to work offline and load faster, you can change
