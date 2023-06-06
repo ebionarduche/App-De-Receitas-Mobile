@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Login() {
   const [values, setValues] = useState({
     email: '',
     password: '',
   });
+  const history = useHistory();
 
   const regex = /^[^\s@]{2,}@[^\s@]+\.[^\s@]+$/;
   const { email, password } = values;
@@ -16,6 +18,11 @@ function Login() {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/meals');
   };
 
   return (
@@ -40,6 +47,7 @@ function Login() {
         data-testid="login-submit-btn"
         type="button"
         disabled={ !habilited }
+        onClick={ handleSubmit }
       >
         Entrar
       </button>
