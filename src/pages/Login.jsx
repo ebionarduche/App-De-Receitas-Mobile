@@ -21,7 +21,7 @@ function Login() {
   };
 
   const handleSubmit = () => {
-    localStorage.setItem('user', JSON.stringify(email));
+    localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/recipes');
   };
 
