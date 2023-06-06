@@ -41,24 +41,37 @@ function SearchBar() {
         id=""
         data-testid="search-input"
       />
-      <input
-        type="radio"
-        name="search"
-        value="ingredient"
-        data-testid="ingredient-search-radio"
-      />
-      <input
-        type="radio"
-        name="search"
-        value="name"
-        data-testid="name-search-radio"
-      />
-      <input
-        type="radio"
-        name="search"
-        value="first-letter"
-        data-testid="first-letter-search-radio"
-      />
+      <label htmlFor="search">
+        <input
+          id="ingredient"
+          type="radio"
+          name="search"
+          value="ingredient"
+          defaultChecked
+          data-testid="ingredient-search-radio"
+        />
+        Ingrediente
+      </label>
+      <label htmlFor="">
+        <input
+          id="name"
+          type="radio"
+          name="search"
+          value="name"
+          data-testid="name-search-radio"
+        />
+        Nome
+      </label>
+      <label htmlFor="first-letter">
+        <input
+          id="first-letter"
+          type="radio"
+          name="search"
+          value="first-letter"
+          data-testid="first-letter-search-radio"
+        />
+        Primeira letra
+      </label>
       <button
         data-testid="exec-search-btn"
         onClick={ searchHandle }
