@@ -5,6 +5,8 @@ import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import App from '../App';
+import RecipesProvider from '../context/RecipesProvider';
+import SearchProvider from '../context/SearchProvider';
 
 describe('Testes para 90% de cobertura do Footer;', () => {
   it('Testando se os botões são renderizados em recipes:', () => {
@@ -13,7 +15,11 @@ describe('Testes para 90% de cobertura do Footer;', () => {
 
     render(
       <Router history={ history }>
-        <App />
+        <RecipesProvider>
+          <SearchProvider>
+            <App />
+          </SearchProvider>
+        </RecipesProvider>
       </Router>,
     );
 
@@ -26,7 +32,11 @@ describe('Testes para 90% de cobertura do Footer;', () => {
 
     render(
       <Router history={ history }>
-        <App />
+        <RecipesProvider>
+          <SearchProvider>
+            <App />
+          </SearchProvider>
+        </RecipesProvider>
       </Router>,
     );
 
@@ -41,7 +51,11 @@ describe('Testes para 90% de cobertura do Footer;', () => {
 
     render(
       <Router history={ history }>
-        <App />
+        <RecipesProvider>
+          <SearchProvider>
+            <App />
+          </SearchProvider>
+        </RecipesProvider>
       </Router>,
     );
 
