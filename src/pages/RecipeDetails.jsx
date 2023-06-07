@@ -9,9 +9,9 @@ function RecipeDetails() {
   const [imageUrl, setImageUrl] = useState('');
   const [titleUrl, setTitleUrl] = useState('');
   const [categoryUrl, setCategoryUrl] = useState('');
-  const [ingredientUrl, setIngredientUrl] = useState('');
+  // const [ingredientUrl, setIngredientUrl] = useState('');
   const [instructionsUrl, setInstructionsUrl] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
+  // const [videoUrl, setVideoUrl] = useState('');
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -26,17 +26,14 @@ function RecipeDetails() {
   };
 
   useEffect(() => {
-    // IDs should come from the API response
-    const idMeal = 52977;
+    const idMel = 52977;
     const idDrink = 11007;
     let API = '';
 
-    if (url.includes('/meals')) {
-      API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
-      console.log(API);
-    } if (url.includes('/drinks')) {
+    if (url.includes(`/meals/${idMel}`)) {
+      API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMel}`;
+    } else if (url.includes(`/drinks/${idDrink}`)) {
       API = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
-      console.log(API);
     }
 
     fetch(API)
@@ -49,43 +46,49 @@ function RecipeDetails() {
           setIngredientUrl(getIngredients(data.meals[0]));
           setInstructionsUrl(data.meals[0].strInstructions);
           setVideoUrl(data.meals[0].strYoutube);
-        } if (url.includes('/drinks')) {
+        } else if (url.includes('/drinks')) {
           setImageUrl(data.drinks[0].strDrinkThumb);
-
           setTitleUrl(data.drinks[0].strDrink);
           setCategoryUrl(data.drinks[0].strCategory);
           setIngredientUrl(getIngredients(data.drinks[0]));
           setInstructionsUrl(data.drinks[0].strInstructions);
         }
       });
-  }, [url]);
+  }, [id, url]);
 
   return (
     <div>
       <h1>{id}</h1>
       <p data-testid="recipe-title">{titleUrl}</p>
       <p data-testid="recipe-category">{categoryUrl}</p>
-      <p data-testid="${ingredientes[i]}-ingredient-name-and-measure">{ingredientUrl}</p>
+      {/* {ingredientUrl.map((ingredient, index) => (
+        <p
+          key={ index }
+          data-testid={
+            `${ingredient}-${index}-ingredient-name-and-measure`
+          }
+        >
+          {ingredient}
+        </p>
+      ))} */}
       <p data-testid="instructions">{instructionsUrl}</p>
       <div>
-        {url.includes('/meals') && videoUrl && (
-          // <video controls>
-          //   <source src={ videoUrl } type="video/mp4" />
-          // </video>
+        {/* {url.includes('/meals') && videoUrl && (
           <iframe
             width="420"
             height="315"
-            src={ videoUrl }
+            src={videoUrl}
           />
-        )}
+        )} */}
       </div>
-      {imageUrl && <img
-        className="img-recipe"
-        src={ imageUrl }
-        alt="Recipe"
-        data-testid="recipe-photo"
-      />}
-
+      {imageUrl && (
+        <img
+          className="img-recipe"
+          src={ imageUrl }
+          alt="Recipe"
+          data-testid="recipe-photo"
+        />
+      )}
     </div>
   );
 }
