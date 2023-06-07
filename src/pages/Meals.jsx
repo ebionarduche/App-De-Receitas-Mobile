@@ -7,9 +7,13 @@ import './Recipes.css';
 
 function Meals() {
   const [recipesMeals, SetRecipesMeals] = useState([]);
-  const { RecipesResult, isLoading } = useContext(RecipesContext);
+  const [renderCategory, setRenderCategory] = useState([]);
+  const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
 
   const startPage = () => {
+    const five = 5;
+    const fivecategorys = Categorys.slice(0, five);
+    setRenderCategory(fivecategorys);
     const twelve = 12;
     const twelveCards = RecipesResult.slice(0, twelve);
     SetRecipesMeals(twelveCards);
@@ -28,30 +32,42 @@ function Meals() {
   return (
     <div className="container">
       <Header title="Meals" btnProfile btnSearch />
+      {
+        renderCategory.map(({ strCategory, index }) => (
+          <button
+            key={ index }
+            data-testid={ `${strCategory}-category-filter` }
+          >
+            {strCategory}
+          </button>
+        ))
+      }
       <div className="cards-container">
-        {isLoading ? (
-          'Carregando...'
-        ) : (
-          recipesMeals.map(({ idMeal, strMealThumb, strMeal }, index) => (
-            <div className="card" key={ idMeal }>
-              <button
-                className="custom-button"
-                data-testid={ `${index}-recipe-card` }
-                onClick={ () => handleClick(idMeal) }
-              >
-                <img
-                  data-testid={ `${index}-card-img` }
-                  src={ strMealThumb }
-                  alt={ strMeal }
-                  width="100px"
-                />
-                <span data-testid={ `${index}-card-name` }>{strMeal}</span>
-              </button>
-            </div>
-          ))
-        )}
+        {
+          isLoading ? (
+            'Carregando...'
+          ) : (
+            recipesMeals.map(({ idMeal, strMealThumb, strMeal }, index) => (
+              <div className="card" key={ idMeal }>
+                <button
+                  className="custom-button"
+                  data-testid={ `${index}-recipe-card` }
+                  onClick={ () => handleClick(idMeal) }
+                >
+                  <h6 data-testid={ `${index}-card-name` }>{strMeal}</h6>
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    src={ strMealThumb }
+                    alt={ strMeal }
+                    width="100px"
+                  />
+                </button>
+              </div>
+            ))
+          )
+        }
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
