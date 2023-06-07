@@ -9,31 +9,31 @@ function RecipeDetails() {
   const [imageUrl, setImageUrl] = useState('');
   const [titleUrl, setTitleUrl] = useState('');
   const [categoryUrl, setCategoryUrl] = useState('');
-  // const [ingredientUrl, setIngredientUrl] = useState('');
+  const [ingredientUrl, setIngredientUrl] = useState([]);
   const [instructionsUrl, setInstructionsUrl] = useState('');
-  // const [videoUrl, setVideoUrl] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
+  const [alcoholicUrl, setAlcoholicUrl] = useState('');
 
   const getIngredients = (data) => {
     const ingredientes = [];
     const max = 20;
     for (let i = 1; i <= max; i += 1) {
       const ingredient = data[`strIngredient${i}`];
-      if (ingredient) {
-        ingredientes.push(ingredient);
+      const measure = data[`strMeasure${i}`];
+      if (ingredient && measure) {
+        ingredientes.push({ ingredient, measure });
       }
     }
     return ingredientes;
   };
 
   useEffect(() => {
-    const idMel = 52977;
-    const idDrink = 11007;
     let API = '';
 
-    if (url.includes(`/meals/${idMel}`)) {
-      API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMel}`;
-    } else if (url.includes(`/drinks/${idDrink}`)) {
-      API = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+    if (url.includes(`/meals/${id}`)) {
+      API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    } else if (url.includes(`/drinks/${id}`)) {
+      API = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     }
 
     fetch(API)
@@ -52,34 +52,41 @@ function RecipeDetails() {
           setCategoryUrl(data.drinks[0].strCategory);
           setIngredientUrl(getIngredients(data.drinks[0]));
           setInstructionsUrl(data.drinks[0].strInstructions);
+          setAlcoholicUrl(data.drinks[0].strAlcoholic);
         }
       });
   }, [id, url]);
 
   return (
     <div>
-      <h1>{id}</h1>
       <p data-testid="recipe-title">{titleUrl}</p>
-      <p data-testid="recipe-category">{categoryUrl}</p>
-      {/* {ingredientUrl.map((ingredient, index) => (
-        <p
-          key={ index }
-          data-testid={
-            `${ingredient}-${index}-ingredient-name-and-measure`
-          }
-        >
-          {ingredient}
-        </p>
-      ))} */}
+      {url.includes('/meal') && titleUrl && (
+        <p data-testid="recipe-category">{categoryUrl}</p>
+      )}
       <p data-testid="instructions">{instructionsUrl}</p>
+      {url.includes('/drinks') && instructionsUrl && (
+        <p data-testid="recipe-category">{alcoholicUrl}</p>
+      )}
+      {ingredientUrl.map((ingredient, index) => (
+        <div key={ index }>
+          <p
+            data-testid={
+              `${index}-ingredient-name-and-measure`
+            }
+          >
+            {`${ingredient.measure} ${ingredient.ingredient}`}
+          </p>
+        </div>
+      ))}
       <div>
-        {/* {url.includes('/meals') && videoUrl && (
-          <iframe
+        {url.includes('/meals') && videoUrl && (
+          <track
+            data-testid="video"
             width="420"
             height="315"
-            src={videoUrl}
+            src={ videoUrl }
           />
-        )} */}
+        )}
       </div>
       {imageUrl && (
         <img
