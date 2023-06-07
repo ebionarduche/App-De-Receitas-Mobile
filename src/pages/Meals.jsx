@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import './Meals.css';
+import './Recipes.css';
 
 function Meals() {
   const [recipesMeals, SetRecipesMeals] = useState([]);
@@ -26,23 +26,18 @@ function Meals() {
   }, [isLoading]);
 
   return (
-    <div>
+    <div className="container">
       <Header title="Meals" btnProfile btnSearch />
-      {
-        isLoading ? 'Carregando...' : (
+      <div className="cards-container">
+        {isLoading ? (
+          'Carregando...'
+        ) : (
           recipesMeals.map(({ idMeal, strMealThumb, strMeal }, index) => (
-            <div key={ idMeal }>
+            <div className="card" key={ idMeal }>
               <button
                 className="custom-button"
-                key={ idMeal }
                 data-testid={ `${index}-recipe-card` }
                 onClick={ () => handleClick(idMeal) }
-                onKeyDown={ (event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
-                    handleClick(idMeal);
-                  }
-                } }
-                tabIndex={ 0 }
               >
                 <img
                   data-testid={ `${index}-card-img` }
@@ -52,10 +47,11 @@ function Meals() {
                 />
                 <span data-testid={ `${index}-card-name` }>{strMeal}</span>
               </button>
-            </div>)))
-      }
+            </div>
+          ))
+        )}
+      </div>
       <Footer />
-
     </div>
   );
 }
