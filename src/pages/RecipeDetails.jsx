@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import '../style/Recipe.css';
 
 function RecipeDetails() {
+  const { id } = useParams();
   const history = useHistory();
   const url = history.location.pathname;
   const [imageUrl, setImageUrl] = useState('');
@@ -61,6 +62,7 @@ function RecipeDetails() {
 
   return (
     <div>
+      <h1>{id}</h1>
       <p data-testid="recipe-title">{titleUrl}</p>
       <p data-testid="recipe-category">{categoryUrl}</p>
       <p data-testid="${ingredientes[i]}-ingredient-name-and-measure">{ingredientUrl}</p>

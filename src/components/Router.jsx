@@ -7,6 +7,7 @@ import Drinks from '../pages/Drinks';
 import Meals from '../pages/Meals';
 import DoneRecipes from '../pages/DoneRecipes';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
+import RecipeDetails from '../pages/RecipeDetails';
 
 function Router() {
   return (
@@ -18,6 +19,8 @@ function Router() {
       <Route exact path="/meals" component={ Meals } />
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+      <Route exact path="/:recipes/:id" component={ RecipeDetails } />
+
     </Switch>
   );
 }

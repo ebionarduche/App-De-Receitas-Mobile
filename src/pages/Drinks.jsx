@@ -6,9 +6,13 @@ import Header from '../components/Header';
 
 function Drinks() {
   const [recipesDrinks, SetRecipesDrinks] = useState([]);
-  const { RecipesResult, isLoading } = useContext(RecipesContext);
+  const [renderCategory, setRenderCategory] = useState([]);
+  const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
 
   const startPage = () => {
+    const five = 5;
+    const fivecategorys = Categorys.slice(0, five);
+    setRenderCategory(fivecategorys);
     const twelve = 12;
     const twelveCards = RecipesResult.slice(0, twelve);
     SetRecipesDrinks(twelveCards);
@@ -27,6 +31,16 @@ function Drinks() {
   return (
     <div className="container">
       <Header title="Drinks" btnProfile btnSearch />
+      {
+        renderCategory.map(({ strCategory, index }) => (
+          <button
+            key={ index }
+            data-testid={ `${strCategory}-category-filter` }
+          >
+            {strCategory}
+          </button>
+        ))
+      }
       <div className="cards-container">
         {
           isLoading ? 'Carregando...' : (
@@ -47,8 +61,8 @@ function Drinks() {
                 </button>
               </div>)))
         }
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
