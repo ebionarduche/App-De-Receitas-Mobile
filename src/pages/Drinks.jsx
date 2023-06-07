@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import RecipesContext from '../context/RecipesContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -18,7 +17,7 @@ function Drinks() {
   const history = useHistory();
 
   const handleClick = (recipeId) => {
-    history.push(`/meals/${recipeId}`);
+    history.push(`/drinks/${recipeId}`);
   };
 
   useEffect(() => {
@@ -26,30 +25,29 @@ function Drinks() {
   }, [isLoading]);
 
   return (
-    <div>
+    <div className="container">
       <Header title="Drinks" btnProfile btnSearch />
-      {
-        isLoading ? 'Carregando...' : (
-          recipesDrinks.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-            <div
-              key={ idDrink }
-              data-testid={ `${index}-recipe-card` }
-            >
-              <img
-                data-testid={ `${index}-card-img` }
-                src={ strDrinkThumb }
-                alt={ strDrink }
-                width="105px"
-              />
-              <span data-testid={ `${index}-card-name` }>{strDrink}</span>
-              <button
-                type="button"
-                onClick={ () => handleClick(idDrink) }
-              >
-                Detalhes
-              </button>
-            </div>)))
-      }
+      <div className="cards-container">
+        {
+          isLoading ? 'Carregando...' : (
+            recipesDrinks.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
+              <div className="card" key={ idDrink }>
+                <button
+                  className="custom-button"
+                  data-testid={ `${index}-recipe-card` }
+                  onClick={ () => handleClick(idDrink) }
+                >
+                  <img
+                    data-testid={ `${index}-card-img` }
+                    src={ strDrinkThumb }
+                    alt={ strDrink }
+                    width="105px"
+                  />
+                  <span data-testid={ `${index}-card-name` }>{strDrink}</span>
+                </button>
+              </div>)))
+        }
+      </div>
       <Footer />
     </div>
   );
