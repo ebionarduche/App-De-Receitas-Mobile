@@ -1,4 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import RecipesContext from '../context/RecipesContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -11,6 +13,12 @@ function Drinks() {
     const twelve = 12;
     const twelveCards = RecipesResult.slice(0, twelve);
     SetRecipesDrinks(twelveCards);
+  };
+
+  const history = useHistory();
+
+  const handleClick = (recipeId) => {
+    history.push(`/meals/${recipeId}`);
   };
 
   useEffect(() => {
@@ -27,13 +35,19 @@ function Drinks() {
               key={ idDrink }
               data-testid={ `${index}-recipe-card` }
             >
-              <span data-testid={ `${index}-card-name` }>{strDrink}</span>
               <img
                 data-testid={ `${index}-card-img` }
                 src={ strDrinkThumb }
                 alt={ strDrink }
                 width="105px"
               />
+              <span data-testid={ `${index}-card-name` }>{strDrink}</span>
+              <button
+                type="button"
+                onClick={ () => handleClick(idDrink) }
+              >
+                Detalhes
+              </button>
             </div>)))
       }
       <Footer />
