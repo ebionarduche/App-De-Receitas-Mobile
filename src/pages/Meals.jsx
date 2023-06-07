@@ -4,11 +4,19 @@ import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './Recipes.css';
+import Card from '../components/Card';
 
 function Meals() {
   const [recipesMeals, SetRecipesMeals] = useState([]);
   const [renderCategory, setRenderCategory] = useState([]);
-  const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
+
+  const {
+    RecipesResult,
+    isLoading,
+    Categorys,
+    fetchCategorysOnClick,
+    // filterCategorys,
+  } = useContext(RecipesContext);
 
   const startPage = () => {
     const five = 5;
@@ -36,6 +44,8 @@ function Meals() {
         renderCategory.map(({ strCategory, index }) => (
           <button
             key={ index }
+            // value={ strCategory }
+            onClick={ () => fetchCategorysOnClick(strCategory) }
             data-testid={ `${strCategory}-category-filter` }
           >
             {strCategory}
@@ -48,21 +58,15 @@ function Meals() {
             'Carregando...'
           ) : (
             recipesMeals.map(({ idMeal, strMealThumb, strMeal }, index) => (
-              <div className="card" key={ idMeal }>
-                <button
-                  className="custom-button"
-                  data-testid={ `${index}-recipe-card` }
-                  onClick={ () => handleClick(idMeal) }
-                >
-                  <h6 data-testid={ `${index}-card-name` }>{strMeal}</h6>
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ strMealThumb }
-                    alt={ strMeal }
-                    width="100px"
-                  />
-                </button>
-              </div>
+              <Card
+                key={ index }
+                id={ idMeal }
+                thumbnail={ strMealThumb }
+                name={ strMeal }
+                index={ index }
+                handleClick={ handleClick }
+
+              />
             ))
           )
         }

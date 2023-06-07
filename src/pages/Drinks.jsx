@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Card from '../components/Card';
 
 function Drinks() {
   const [recipesDrinks, SetRecipesDrinks] = useState([]);
@@ -45,21 +46,16 @@ function Drinks() {
         {
           isLoading ? 'Carregando...' : (
             recipesDrinks.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-              <div className="card" key={ idDrink }>
-                <button
-                  className="custom-button"
-                  data-testid={ `${index}-recipe-card` }
-                  onClick={ () => handleClick(idDrink) }
-                >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ strDrinkThumb }
-                    alt={ strDrink }
-                    width="105px"
-                  />
-                  <span data-testid={ `${index}-card-name` }>{strDrink}</span>
-                </button>
-              </div>)))
+              <Card
+                key={ index }
+                id={ idDrink }
+                thumbnail={ strDrinkThumb }
+                name={ strDrink }
+                index={ index }
+                handleClick={ handleClick }
+              />
+            ))
+          )
         }
         <Footer />
       </div>

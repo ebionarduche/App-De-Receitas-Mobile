@@ -8,6 +8,7 @@ function RecipesProvider({ children }) {
 
   const [RecipesResult, setRecipesResult] = useState([]);
   const [Categorys, setCategorys] = useState([]);
+  const [filterCategorys, setFilterCategorys] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const URL = location.pathname === '/meals'
@@ -27,6 +28,15 @@ function RecipesProvider({ children }) {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const fetchCategorysOnClick = async (valueButton) => {
+    console.log(valueButton);
+    const response = await fetch(`${URL}${valueButton}`);
+    const data = await response.json();
+    const result = location.pathname === '/meals' ? data.meals : data.drinks;
+    console.log(result);
+    setFilterCategorys(result);
   };
 
   useEffect(() => {
@@ -51,6 +61,8 @@ function RecipesProvider({ children }) {
     RecipesResult,
     isLoading,
     Categorys,
+    filterCategorys,
+    fetchCategorysOnClick,
   }), [RecipesResult, isLoading, Categorys]);
 
   return (
