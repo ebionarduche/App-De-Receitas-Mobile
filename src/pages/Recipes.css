@@ -1,0 +1,25 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.cards-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+}
+
+.card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-button {
+  background-color: transparent;
+  border: none;
+}

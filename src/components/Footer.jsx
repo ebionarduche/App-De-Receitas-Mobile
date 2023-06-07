@@ -4,7 +4,7 @@ import React from 'react';
 import drink from '../images/drinkIcon.svg';
 import food from '../images/mealIcon.svg';
 import '../style/Footer.css';
-import RecipeDetails from '../pages/RecipeDetails';
+// import RecipeDetails from '../pages/RecipeDetails';
 
 function Footer() {
   const history = useHistory();
@@ -32,7 +32,7 @@ function Footer() {
           <img src={ food } alt="" />
         </button>
       </footer>
-      <RecipeDetails />
+      {/* <RecipeDetails /> */}
     </div>
   );
 }
