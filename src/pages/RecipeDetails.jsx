@@ -59,6 +59,7 @@ function RecipeDetails() {
 
   return (
     <div>
+      <h1>{id}</h1>
       <p data-testid="recipe-title">{titleUrl}</p>
       {url.includes('/meal') && titleUrl && (
         <p data-testid="recipe-category">{categoryUrl}</p>
