@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import SearchContext from '../context/SearchContext';
-// Resolvendo conflitos
+
 function SearchBar() {
   const {
     searchApi,

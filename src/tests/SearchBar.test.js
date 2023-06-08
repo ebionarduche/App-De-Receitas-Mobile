@@ -2,10 +2,18 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './renderWith';
 import App from '../App';
+import RecipesProvider from '../context/RecipesProvider';
+import SearchProvider from '../context/SearchProvider';
 
-describe('Testante barra de busca', () => {
+describe('Testando barra de busca', () => {
   it('Pesquisa por ingrediente', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <SearchProvider>
+          <App />
+        </SearchProvider>
+      </RecipesProvider>,
+    );
     act(() => history.push('/meals'));
     expect(history.location.pathname).toBe('/meals');
 

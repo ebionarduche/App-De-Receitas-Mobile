@@ -15,6 +15,7 @@ export default function SearchProvider({ children }) {
 
   const [searchResult, setSearchResult] = useState({});
   const searchApi = (search) => {
+    console.log(`${URL}${search}`);
     fetch(`${URL}${search}`)
       .then((response) => response.json())
       .then((data) => {

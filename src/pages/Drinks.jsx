@@ -34,7 +34,7 @@ function Drinks() {
       {
         renderCategory.map(({ strCategory, index }) => (
           <button
-            key={ index }
+            key={ strCategory + index }
             data-testid={ `${strCategory}-category-filter` }
           >
             {strCategory}
@@ -45,7 +45,7 @@ function Drinks() {
         {
           isLoading ? 'Carregando...' : (
             recipesDrinks.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-              <div className="card" key={ idDrink }>
+              <div className="card" key={ strDrink + idDrink }>
                 <button
                   className="custom-button"
                   data-testid={ `${index}-recipe-card` }
