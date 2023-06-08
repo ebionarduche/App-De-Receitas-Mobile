@@ -34,5 +34,8 @@ describe('Testando barra de busca', () => {
     userEvent.type(searchInput, 'a');
     userEvent.click(firstLetterRadio);
     userEvent.click(searchButton);
+    userEvent.type(searchInput, 'xablau');
+    userEvent.click(firstLetterRadio);
+    userEvent.click(searchButton);
   });
 });
