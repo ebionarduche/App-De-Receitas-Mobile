@@ -16,11 +16,14 @@ export default function SearchProvider({ children }) {
   const [searchResult, setSearchResult] = useState({});
   const [searched, setSearched] = useState(false);
   const searchApi = (search) => {
-    console.log(`${URL}${search}`);
     fetch(`${URL}${search}`)
       .then((response) => response.json())
       .then((data) => {
         const result = pathname === '/meals' ? data.meals : data.drinks;
+        if (!result) {
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+          return;
+        }
         setSearchResult(result);
         if (result.length === 1) {
           history.push(pathname === '/meals'
