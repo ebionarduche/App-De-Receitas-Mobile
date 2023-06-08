@@ -9,8 +9,8 @@ function RecipeDetails() {
   const [imageUrl, setImageUrl] = useState('');
   const [titleUrl, setTitleUrl] = useState('');
   const [categoryUrl, setCategoryUrl] = useState('');
-  const [ingredientUrl, setIngredientUrl] = useState('');
-  const [instructionsUrl, setInstructionsUrl] = useState('');
+  const [ingredientUrl, setIngredientUrl] = useState([]);
+  const [instructionsUrl, setInstructionsUrl] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
 
   const getIngredients = (data) => {
@@ -27,15 +27,13 @@ function RecipeDetails() {
 
   useEffect(() => {
     // IDs should come from the API response
-    const idMeal = 52977;
-    const idDrink = 11007;
     let API = '';
 
     if (url.includes('/meals')) {
-      API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+      API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       console.log(API);
     } if (url.includes('/drinks')) {
-      API = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+      API = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       console.log(API);
     }
 
@@ -60,12 +58,21 @@ function RecipeDetails() {
       });
   }, [url]);
 
+  const ingredientP = ingredientUrl.map((ingredient, index) => (
+    <p
+      key={ ingredient + index }
+      data-testid={ `${ingredient}-ingredient-name-and-measure` }
+    >
+      {ingredient}
+    </p>
+  ));
+
   return (
     <div>
       <h1>{id}</h1>
       <p data-testid="recipe-title">{titleUrl}</p>
       <p data-testid="recipe-category">{categoryUrl}</p>
-      <p data-testid="${ingredientes[i]}-ingredient-name-and-measure">{ingredientUrl}</p>
+      { ingredientP }
       <p data-testid="instructions">{instructionsUrl}</p>
       <div>
         {url.includes('/meals') && videoUrl && (
@@ -73,6 +80,7 @@ function RecipeDetails() {
           //   <source src={ videoUrl } type="video/mp4" />
           // </video>
           <iframe
+            title="instruction"
             width="420"
             height="315"
             src={ videoUrl }
