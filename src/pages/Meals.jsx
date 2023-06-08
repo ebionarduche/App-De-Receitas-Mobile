@@ -4,18 +4,21 @@ import RecipesContext from '../context/RecipesContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './Recipes.css';
+import SearchContext from '../context/SearchContext';
 
 function Meals() {
   const [recipesMeals, SetRecipesMeals] = useState([]);
   const [renderCategory, setRenderCategory] = useState([]);
   const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
+  const { searchResult, searched } = useContext(SearchContext);
 
   const startPage = () => {
     const five = 5;
     const fivecategorys = Categorys.slice(0, five);
     setRenderCategory(fivecategorys);
     const twelve = 12;
-    const twelveCards = RecipesResult.slice(0, twelve);
+    const data = searched ? searchResult : RecipesResult;
+    const twelveCards = data.slice(0, twelve);
     SetRecipesMeals(twelveCards);
   };
 
@@ -27,7 +30,7 @@ function Meals() {
 
   useEffect(() => {
     startPage();
-  }, [isLoading]);
+  }, [isLoading, searched]);
 
   return (
     <div className="container">

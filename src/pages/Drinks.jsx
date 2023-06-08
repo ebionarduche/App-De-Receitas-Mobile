@@ -3,18 +3,21 @@ import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import SearchContext from '../context/SearchContext';
 
 function Drinks() {
   const [recipesDrinks, SetRecipesDrinks] = useState([]);
   const [renderCategory, setRenderCategory] = useState([]);
   const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
+  const { searchResult, searched } = useContext(SearchContext);
 
   const startPage = () => {
     const five = 5;
     const fivecategorys = Categorys.slice(0, five);
     setRenderCategory(fivecategorys);
     const twelve = 12;
-    const twelveCards = RecipesResult.slice(0, twelve);
+    const data = searched ? searchResult : RecipesResult;
+    const twelveCards = data.slice(0, twelve);
     SetRecipesDrinks(twelveCards);
   };
 
@@ -26,7 +29,7 @@ function Drinks() {
 
   useEffect(() => {
     startPage();
-  }, [isLoading]);
+  }, [isLoading, searched]);
 
   return (
     <div className="container">

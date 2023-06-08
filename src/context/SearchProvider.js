@@ -14,6 +14,7 @@ export default function SearchProvider({ children }) {
     : 'https://www.thecocktaildb.com/api/json/v1/1/';
 
   const [searchResult, setSearchResult] = useState({});
+  const [searched, setSearched] = useState(false);
   const searchApi = (search) => {
     console.log(`${URL}${search}`);
     fetch(`${URL}${search}`)
@@ -25,13 +26,15 @@ export default function SearchProvider({ children }) {
           history.push(pathname === '/meals'
             ? `/meals/${result[0].idMeal}`
             : `/drinks/${result[0].idDrink}`);
-        }
+          setSearched(false);
+        } else { setSearched(true); }
       });
   };
 
   const initialState = useMemo(() => ({
     searchResult,
     searchApi,
+    searched,
   }), [searchResult]);
 
   return (
