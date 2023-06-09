@@ -48,9 +48,9 @@ function Drinks() {
           All
         </button>
         {
-          renderCategory.map(({ strCategory, index }) => (
+          renderCategory.map(({ strCategory }) => (
             <button
-              key={ index }
+              key={ strCategory }
               className="category-button"
               data-testid={ `${strCategory}-category-filter` }
               onClick={ () => {
@@ -67,7 +67,7 @@ function Drinks() {
           isLoading ? 'Carregando...' : (
             renderRecipes.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
               <Card
-                key={ index }
+                key={ idDrink }
                 id={ idDrink }
                 thumbnail={ strDrinkThumb }
                 name={ strDrink }

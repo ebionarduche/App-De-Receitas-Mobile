@@ -50,9 +50,10 @@ function Meals() {
           All
         </button>
         {
-          renderCategory.map(({ strCategory, index }) => (
+          renderCategory.map(({ strCategory }) => (
             <button
-              key={ index }
+              key={ strCategory }
+              className="category-button"
               data-testid={ `${strCategory}-category-filter` }
               onClick={ () => {
                 fetchCategorysOnClick(strCategory);
@@ -70,7 +71,7 @@ function Meals() {
           ) : (
             renderRecipes.map(({ idMeal, strMealThumb, strMeal }, index) => (
               <Card
-                key={ index }
+                key={ idMeal }
                 id={ idMeal }
                 thumbnail={ strMealThumb }
                 name={ strMeal }
