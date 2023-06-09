@@ -9,13 +9,16 @@ import Card from '../components/Card';
 function Meals() {
   const [recipesMeals, SetRecipesMeals] = useState([]);
   const [renderCategory, setRenderCategory] = useState([]);
+  const [toggleFilter, setTogglerFilter] = useState(false);
+  // Preciso acertar a url na parte do provider URL de categorys Q precida d CCCC
+  // Preciso tornar o valor recipes dinâmico, recebendo o valor de filterCategorys quando é clicado no botão e recipesResult
 
   const {
-    RecipesResult,
+    RecipesResult, // Resultado da primeira requesição
+    filterCategorys, // resultado da API quando é clicado nas categorias
     isLoading,
-    Categorys,
-    fetchCategorysOnClick,
-    // filterCategorys,
+    Categorys, // Categorias que vem de API
+    fetchCategorysOnClick, // função que chama na API de categorys
   } = useContext(RecipesContext);
 
   const startPage = () => {
@@ -33,6 +36,14 @@ function Meals() {
     history.push(`/meals/${recipeId}`);
   };
 
+  const ToggleFilterCategory = () => {
+    if (toggleFilter === false) {
+      setTogglerFilter(true);
+    } else {
+      setTogglerFilter(false);
+    }
+  };
+
   useEffect(() => {
     startPage();
   }, [isLoading]);
@@ -44,8 +55,10 @@ function Meals() {
         renderCategory.map(({ strCategory, index }) => (
           <button
             key={ index }
-            // value={ strCategory }
-            onClick={ () => fetchCategorysOnClick(strCategory) }
+            onClick={ () => {
+              fetchCategorysOnClick(strCategory);
+              ToggleFilterCategory();
+            } }
             data-testid={ `${strCategory}-category-filter` }
           >
             {strCategory}
@@ -65,7 +78,6 @@ function Meals() {
                 name={ strMeal }
                 index={ index }
                 handleClick={ handleClick }
-
               />
             ))
           )
