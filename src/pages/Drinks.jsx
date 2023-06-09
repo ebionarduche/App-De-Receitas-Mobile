@@ -13,6 +13,7 @@ function Drinks() {
     RecipesResult, // Resultado da API Renderização inicial
     isLoading,
     Categorys, // Resultado da API p/botões categorias
+    fetchCategorysOnClick, // função que chama na API de categorys
   } = useContext(RecipesContext);
 
   const startPage = () => {
@@ -32,6 +33,7 @@ function Drinks() {
 
   useEffect(() => {
     startPage();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
   return (
@@ -49,6 +51,7 @@ function Drinks() {
           renderCategory.map(({ strCategory, index }) => (
             <button
               key={ index }
+              className="category-button"
               data-testid={ `${strCategory}-category-filter` }
               onClick={ () => {
                 fetchCategorysOnClick(strCategory);
