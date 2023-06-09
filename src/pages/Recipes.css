@@ -3,7 +3,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
+  max-height: 640px;
+  max-width: 360px;
+}
+
+.buttons-container {
+  display: flex;
+  margin-top: 600px;
 }
 
 .cards-container {

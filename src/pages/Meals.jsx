@@ -7,17 +7,14 @@ import './Recipes.css';
 import Card from '../components/Card';
 
 function Meals() {
-  const [recipesMeals, SetRecipesMeals] = useState([]);
-  const [renderCategory, setRenderCategory] = useState([]);
-  const [toggleFilter, setTogglerFilter] = useState(false);
-  // Preciso acertar a url na parte do provider URL de categorys Q precida d CCCC
-  // Preciso tornar o valor recipes dinâmico, recebendo o valor de filterCategorys quando é clicado no botão e recipesResult
+  const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
 
   const {
-    RecipesResult, // Resultado da primeira requesição
-    filterCategorys, // resultado da API quando é clicado nas categorias
+    renderRecipes, // Renderiza as receitas na tela
+    setRenderRecipes, // Seta o valor de Render para a Renderização inicial
+    RecipesResult, // Resultado da API Renderização inicial
     isLoading,
-    Categorys, // Categorias que vem de API
+    Categorys, // Resultado da API p/botões categorias
     fetchCategorysOnClick, // função que chama na API de categorys
   } = useContext(RecipesContext);
 
@@ -27,7 +24,7 @@ function Meals() {
     setRenderCategory(fivecategorys);
     const twelve = 12;
     const twelveCards = RecipesResult.slice(0, twelve);
-    SetRecipesMeals(twelveCards);
+    setRenderRecipes(twelveCards);
   };
 
   const history = useHistory();
@@ -36,41 +33,42 @@ function Meals() {
     history.push(`/meals/${recipeId}`);
   };
 
-  const ToggleFilterCategory = () => {
-    if (toggleFilter === false) {
-      setTogglerFilter(true);
-    } else {
-      setTogglerFilter(false);
-    }
-  };
-
   useEffect(() => {
     startPage();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
   return (
     <div className="container">
       <Header title="Meals" btnProfile btnSearch />
-      {
-        renderCategory.map(({ strCategory, index }) => (
-          <button
-            key={ index }
-            onClick={ () => {
-              fetchCategorysOnClick(strCategory);
-              ToggleFilterCategory();
-            } }
-            data-testid={ `${strCategory}-category-filter` }
-          >
-            {strCategory}
-          </button>
-        ))
-      }
+      <div className="buttons-container">
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ startPage }
+        >
+          All
+        </button>
+        {
+          renderCategory.map(({ strCategory, index }) => (
+            <button
+              key={ index }
+              data-testid={ `${strCategory}-category-filter` }
+              onClick={ () => {
+                fetchCategorysOnClick(strCategory);
+              } }
+            >
+              {strCategory}
+            </button>
+          ))
+        }
+      </div>
       <div className="cards-container">
         {
           isLoading ? (
             'Carregando...'
           ) : (
-            recipesMeals.map(({ idMeal, strMealThumb, strMeal }, index) => (
+            renderRecipes.map(({ idMeal, strMealThumb, strMeal }, index) => (
               <Card
                 key={ index }
                 id={ idMeal }

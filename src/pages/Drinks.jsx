@@ -6,9 +6,14 @@ import Header from '../components/Header';
 import Card from '../components/Card';
 
 function Drinks() {
-  const [recipesDrinks, SetRecipesDrinks] = useState([]);
-  const [renderCategory, setRenderCategory] = useState([]);
-  const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
+  const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
+  const {
+    renderRecipes, // Renderiza as receitas na tela
+    setRenderRecipes, // Seta o valor de Render para a Renderização inicial
+    RecipesResult, // Resultado da API Renderização inicial
+    isLoading,
+    Categorys, // Resultado da API p/botões categorias
+  } = useContext(RecipesContext);
 
   const startPage = () => {
     const five = 5;
@@ -16,7 +21,7 @@ function Drinks() {
     setRenderCategory(fivecategorys);
     const twelve = 12;
     const twelveCards = RecipesResult.slice(0, twelve);
-    SetRecipesDrinks(twelveCards);
+    setRenderRecipes(twelveCards);
   };
 
   const history = useHistory();
@@ -32,20 +37,32 @@ function Drinks() {
   return (
     <div className="container">
       <Header title="Drinks" btnProfile btnSearch />
-      {
-        renderCategory.map(({ strCategory, index }) => (
-          <button
-            key={ index }
-            data-testid={ `${strCategory}-category-filter` }
-          >
-            {strCategory}
-          </button>
-        ))
-      }
+      <div className="buttons-container">
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ startPage }
+        >
+          All
+        </button>
+        {
+          renderCategory.map(({ strCategory, index }) => (
+            <button
+              key={ index }
+              data-testid={ `${strCategory}-category-filter` }
+              onClick={ () => {
+                fetchCategorysOnClick(strCategory);
+              } }
+            >
+              {strCategory}
+            </button>
+          ))
+        }
+      </div>
       <div className="cards-container">
         {
           isLoading ? 'Carregando...' : (
-            recipesDrinks.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
+            renderRecipes.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
               <Card
                 key={ index }
                 id={ idDrink }

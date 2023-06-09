@@ -5,7 +5,7 @@ import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const location = useLocation();
-
+  const [renderRecipes, setRenderRecipes] = useState([]);
   const [RecipesResult, setRecipesResult] = useState([]);
   const [Categorys, setCategorys] = useState([]);
   const [filterCategorys, setFilterCategorys] = useState([]);
@@ -19,6 +19,10 @@ function RecipesProvider({ children }) {
     ? 'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
     : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
 
+  const URL3 = location.pathname === '/meals'
+    ? 'https://www.themealdb.com/api/json/v1/1/filter.php?c='
+    : 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=';
+
   const fetchRecipes = async (url) => {
     try {
       const response = await fetch(url);
@@ -31,12 +35,13 @@ function RecipesProvider({ children }) {
   };
 
   const fetchCategorysOnClick = async (valueButton) => {
-    console.log(valueButton);
-    const response = await fetch(`${URL}${valueButton}`);
+    const twelve = 12;
+    const response = await fetch(`${URL3}${valueButton}`);
     const data = await response.json();
     const result = location.pathname === '/meals' ? data.meals : data.drinks;
-    console.log(result);
     setFilterCategorys(result);
+    setIsLoading(false);
+    setRenderRecipes(result.splice(0, twelve));
   };
 
   useEffect(() => {
@@ -53,8 +58,8 @@ function RecipesProvider({ children }) {
         console.error(error);
       }
     };
-
     fetchAllRecipes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialState = useMemo(() => ({
@@ -63,7 +68,10 @@ function RecipesProvider({ children }) {
     Categorys,
     filterCategorys,
     fetchCategorysOnClick,
-  }), [RecipesResult, isLoading, Categorys]);
+    renderRecipes,
+    setRenderRecipes,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [RecipesResult, isLoading, Categorys, renderRecipes]);
 
   return (
     <RecipesContext.Provider value={ initialState }>
