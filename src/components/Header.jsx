@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import './Header.css';
 
 function Header({ title, btnProfile, btnSearch }) {
   const [searchBar, SetSearchBar] = useState(false);
@@ -22,7 +23,7 @@ function Header({ title, btnProfile, btnSearch }) {
   };
 
   return (
-    <div>
+    <div className="header-container">
       <h1 data-testid="page-title">{title}</h1>
 
       {btnProfile && (
