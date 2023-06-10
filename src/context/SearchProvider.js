@@ -14,23 +14,30 @@ export default function SearchProvider({ children }) {
     : 'https://www.thecocktaildb.com/api/json/v1/1/';
 
   const [searchResult, setSearchResult] = useState({});
+  const [searched, setSearched] = useState(false);
   const searchApi = (search) => {
     fetch(`${URL}${search}`)
       .then((response) => response.json())
       .then((data) => {
         const result = pathname === '/meals' ? data.meals : data.drinks;
+        if (!result) {
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+          return;
+        }
         setSearchResult(result);
         if (result.length === 1) {
           history.push(pathname === '/meals'
             ? `/meals/${result[0].idMeal}`
             : `/drinks/${result[0].idDrink}`);
-        }
+          setSearched(false);
+        } else { setSearched(true); }
       });
   };
 
   const initialState = useMemo(() => ({
     searchResult,
     searchApi,
+    searched,
   }), [searchResult]);
 
   return (
