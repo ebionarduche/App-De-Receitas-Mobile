@@ -5,7 +5,9 @@
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
-  /* height: 100vh; Esta configuração está desalinhando os botões na tela de forma que eles não aparecem nem para o Cypress, e nem mesmo para o RTL, fazendo com que os testes parem de passar. - Li :) */
+  
+  /* height: 100vh; Esta configuração está desalinhando os botões na 
+  tela de forma que eles não aparecem nem para o Cypress, e nem mesmo para o RTL, fazendo com que os testes parem de passar. - Li :) */
   justify-content: center;
   width: 100%;
 }
