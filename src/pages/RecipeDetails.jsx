@@ -28,7 +28,7 @@ function RecipeDetails() {
   useEffect(() => {
     // IDs should come from the API response
     const idMeal = 52977;
-    const idDrink = 11007;
+    const idDrink = 178319;
     let API = '';
 
     if (url.includes('/meals')) {
@@ -65,7 +65,7 @@ function RecipeDetails() {
       <h1>{id}</h1>
       <p data-testid="recipe-title">{titleUrl}</p>
       <p data-testid="recipe-category">{categoryUrl}</p>
-      <p data-testid="${ingredientes[i]}-ingredient-name-and-measure">{ingredientUrl}</p>
+      {/* <p data-testid="${ingredientes[i]}-ingredient-name-and-measure">{ingredientUrl}</p> */}
       <p data-testid="instructions">{instructionsUrl}</p>
       <div>
         {url.includes('/meals') && videoUrl && (

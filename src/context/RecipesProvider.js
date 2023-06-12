@@ -61,6 +61,7 @@ function RecipesProvider({ children }) {
     fetchAllRecipes();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // fazer um toggle que vai chamar esse useEffect e o StartPage
 
   const initialState = useMemo(() => ({
     RecipesResult,
