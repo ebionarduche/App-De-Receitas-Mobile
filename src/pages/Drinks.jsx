@@ -8,7 +8,7 @@ import Card from '../components/Card';
 
 function Drinks() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
-  const [recipesDrinks, SetRecipesDrinks] = useState([]);
+  // const [recipesDrinks, SetRecipesDrinks] = useState([]);
   const [toggle, setToggle] = useState(''); // Toggle categories
 
   const {
@@ -29,7 +29,7 @@ function Drinks() {
     const twelve = 12;
     const data = searched ? searchResult : RecipesResult;
     const twelveCards = data.slice(0, twelve);
-    SetRecipesDrinks(twelveCards);
+    setRenderRecipes(twelveCards);
   };
 
   const history = useHistory();
