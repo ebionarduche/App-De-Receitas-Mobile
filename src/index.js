@@ -6,6 +6,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import RecipesProvider from './context/RecipesProvider';
 import SearchProvider from './context/SearchProvider';
+import ProgressProvider from './context/ProgressProvider';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
@@ -13,7 +14,9 @@ ReactDOM
     <BrowserRouter>
       <RecipesProvider>
         <SearchProvider>
-          <App />
+          <ProgressProvider>
+            <App />
+          </ProgressProvider>
         </SearchProvider>
       </RecipesProvider>
     </BrowserRouter>,
