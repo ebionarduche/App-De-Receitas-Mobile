@@ -31,6 +31,7 @@ describe('Testando barra de busca', () => {
     userEvent.click(searchButton);
     userEvent.click(nameRadio);
     userEvent.click(searchButton);
+    userEvent.clear(searchInput);
     userEvent.type(searchInput, 'a');
     userEvent.click(firstLetterRadio);
     userEvent.click(searchButton);

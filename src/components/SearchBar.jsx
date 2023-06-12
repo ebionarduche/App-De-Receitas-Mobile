@@ -11,9 +11,6 @@ function SearchBar() {
     const searchWord = document.querySelector('input[name=\'searchWord\']').value;
 
     switch (searchInput) {
-    case 'ingredient':
-      searchApi(`filter.php?i=${searchWord}`);
-      break;
     case 'name':
       searchApi(`search.php?s=${searchWord}`);
       break;
@@ -22,8 +19,9 @@ function SearchBar() {
         global.alert('Your search must have only 1 (one) character');
       } else { searchApi(`search.php?f=${searchWord}`); }
       break;
-    default:
-      return '';
+    default: // Ingredient
+      searchApi(`filter.php?i=${searchWord}`);
+      break;
     }
   };
 
