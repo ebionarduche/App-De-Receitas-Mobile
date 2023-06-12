@@ -20,7 +20,6 @@ function Router() {
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
       <Route exact path="/:recipes/:id" component={ RecipeDetails } />
-
     </Switch>
   );
 }
