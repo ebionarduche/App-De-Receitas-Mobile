@@ -3,7 +3,18 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
+  max-height: 640px;
+  max-width: 340px;
+}
+
+.buttons-container {
+  display: flex;
+}
+
+.category-button {
+  background-color: transparent;
+  border: none;
+  width: 60px;
 }
 
 .cards-container {
@@ -22,4 +33,5 @@
 .custom-button {
   background-color: transparent;
   border: none;
+  padding: 5px;
 }

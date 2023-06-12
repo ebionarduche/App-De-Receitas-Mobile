@@ -1,14 +1,25 @@
 import { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import SearchContext from '../context/SearchContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import SearchContext from '../context/SearchContext';
+import Card from '../components/Card';
 
 function Drinks() {
+  const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
   const [recipesDrinks, SetRecipesDrinks] = useState([]);
-  const [renderCategory, setRenderCategory] = useState([]);
-  const { RecipesResult, isLoading, Categorys } = useContext(RecipesContext);
+  const [toggle, setToggle] = useState(''); // Toggle categories
+
+  const {
+    renderRecipes, // Renderiza as receitas na tela
+    setRenderRecipes, // Seta o valor de Render para a Renderização inicial
+    RecipesResult, // Resultado da API Renderização inicial
+    isLoading,
+    Categorys, // Resultado da API p/botões categorias
+    fetchCategorysOnClick, // função que chama na API de categorys
+  } = useContext(RecipesContext);
+
   const { searchResult, searched } = useContext(SearchContext);
 
   const startPage = () => {
@@ -31,38 +42,62 @@ function Drinks() {
     startPage();
   }, [isLoading, searched]);
 
+  const selectCategory = (category) => {
+    setToggle(category);
+    const onlyCategory = renderCategory
+      .some(({ strCategory }) => strCategory === category);
+    if (toggle === category) {
+      return startPage();
+    }
+
+    if (category === 'All') {
+      console.log('Entrei no All');
+      startPage();
+    }
+    if (onlyCategory) {
+      fetchCategorysOnClick(category);
+    }
+  };
+
   return (
     <div className="container">
       <Header title="Drinks" btnProfile btnSearch />
-      {
-        renderCategory.map(({ strCategory, index }) => (
-          <button
-            key={ strCategory + index }
-            data-testid={ `${strCategory}-category-filter` }
-          >
-            {strCategory}
-          </button>
-        ))
-      }
+      <div className="buttons-container">
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          value="All"
+          onClick={ ({ target }) => selectCategory(target.value) }
+        >
+          All
+        </button>
+        {
+          renderCategory.map(({ strCategory }) => (
+            <button
+              key={ strCategory }
+              className="category-button"
+              data-testid={ `${strCategory}-category-filter` }
+              onClick={ () => selectCategory(strCategory) }
+            >
+              {strCategory}
+            </button>
+          ))
+        }
+      </div>
       <div className="cards-container">
         {
           isLoading ? 'Carregando...' : (
-            recipesDrinks.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-              <div className="card" key={ strDrink + idDrink }>
-                <button
-                  className="custom-button"
-                  data-testid={ `${index}-recipe-card` }
-                  onClick={ () => handleClick(idDrink) }
-                >
-                  <img
-                    data-testid={ `${index}-card-img` }
-                    src={ strDrinkThumb }
-                    alt={ strDrink }
-                    width="105px"
-                  />
-                  <span data-testid={ `${index}-card-name` }>{strDrink}</span>
-                </button>
-              </div>)))
+            renderRecipes.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
+              <Card
+                key={ idDrink }
+                id={ idDrink }
+                thumbnail={ strDrinkThumb }
+                name={ strDrink }
+                index={ index }
+                handleClick={ handleClick }
+              />
+            ))
+          )
         }
         <Footer />
       </div>
