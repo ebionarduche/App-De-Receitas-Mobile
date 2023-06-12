@@ -9,7 +9,7 @@ import Card from '../components/Card';
 
 function Meals() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
-  const [recipesMeals, SetRecipesMeals] = useState([]);
+  // const [recipesMeals, SetRecipesMeals] = useState([]);
   const [toggle, setToggle] = useState(''); // Toggle categories
 
   const {
@@ -30,7 +30,7 @@ function Meals() {
     const twelve = 12;
     const data = searched ? searchResult : RecipesResult;
     const twelveCards = data.slice(0, twelve);
-    SetRecipesMeals(twelveCards);
+    setRenderRecipes(twelveCards);
   };
 
   const history = useHistory();
