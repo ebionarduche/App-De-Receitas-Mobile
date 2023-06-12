@@ -2,14 +2,13 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import SearchContext from '../context/SearchContext';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from './Header';
+import Footer from './Footer';
 import './Recipes.css';
-import Card from '../components/Card';
+import Card from './Card';
 
 function Meals() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
-  // const [recipesMeals, SetRecipesMeals] = useState([]);
   const [toggle, setToggle] = useState(''); // Toggle categories
 
   const {
