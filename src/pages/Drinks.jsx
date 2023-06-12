@@ -7,6 +7,8 @@ import Card from '../components/Card';
 
 function Drinks() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
+  const [toggle, setToggle] = useState(''); // Toggle categories
+
   const {
     renderRecipes, // Renderiza as receitas na tela
     setRenderRecipes, // Seta o valor de Render para a Renderização inicial
@@ -36,6 +38,23 @@ function Drinks() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
+  const selectCategory = (category) => {
+    setToggle(category);
+    const onlyCategory = renderCategory
+      .some(({ strCategory }) => strCategory === category);
+    if (toggle === category) {
+      return startPage();
+    }
+
+    if (category === 'All') {
+      console.log('Entrei no All');
+      startPage();
+    }
+    if (onlyCategory) {
+      fetchCategorysOnClick(category);
+    }
+  };
+
   return (
     <div className="container">
       <Header title="Drinks" btnProfile btnSearch />
@@ -43,7 +62,8 @@ function Drinks() {
         <button
           type="button"
           data-testid="All-category-filter"
-          onClick={ startPage }
+          value="All"
+          onClick={ ({ target }) => selectCategory(target.value) }
         >
           All
         </button>
@@ -53,9 +73,7 @@ function Drinks() {
               key={ strCategory }
               className="category-button"
               data-testid={ `${strCategory}-category-filter` }
-              onClick={ () => {
-                fetchCategorysOnClick(strCategory);
-              } }
+              onClick={ () => selectCategory(strCategory) }
             >
               {strCategory}
             </button>

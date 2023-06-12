@@ -8,7 +8,7 @@ import Card from '../components/Card';
 
 function Meals() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
-  const [toggle, setToggle] = useState('');
+  const [toggle, setToggle] = useState(''); // Toggle categories
 
   const {
     renderRecipes, // Renderiza as receitas na tela
@@ -41,7 +41,7 @@ function Meals() {
 
   const selectCategory = (category) => {
     setToggle(category);
-    const onlycategories = renderCategory
+    const onlyCategory = renderCategory
       .some(({ strCategory }) => strCategory === category);
     if (toggle === category) {
       return startPage();
@@ -51,7 +51,7 @@ function Meals() {
       console.log('Entrei no All');
       startPage();
     }
-    if (onlycategories) {
+    if (onlyCategory) {
       fetchCategorysOnClick(category);
     }
   };
