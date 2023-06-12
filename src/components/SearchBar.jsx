@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import SearchContext from '../context/SearchContext';
-// Resolvendo conflitos
+
 function SearchBar() {
   const {
     searchApi,
@@ -10,7 +10,6 @@ function SearchBar() {
     const searchInput = document.querySelector('input[name=\'search\']:checked').value;
     const searchWord = document.querySelector('input[name=\'searchWord\']').value;
 
-    console.log(searchInput);
     switch (searchInput) {
     case 'ingredient':
       searchApi(`filter.php?i=${searchWord}`);

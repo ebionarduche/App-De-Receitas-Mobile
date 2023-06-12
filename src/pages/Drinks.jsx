@@ -1,12 +1,14 @@
 import { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import SearchContext from '../context/SearchContext';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Card from '../components/Card';
 
 function Drinks() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
+  const [recipesDrinks, SetRecipesDrinks] = useState([]);
   const [toggle, setToggle] = useState(''); // Toggle categories
 
   const {
@@ -18,13 +20,16 @@ function Drinks() {
     fetchCategorysOnClick, // função que chama na API de categorys
   } = useContext(RecipesContext);
 
+  const { searchResult, searched } = useContext(SearchContext);
+
   const startPage = () => {
     const five = 5;
     const fivecategorys = Categorys.slice(0, five);
     setRenderCategory(fivecategorys);
     const twelve = 12;
-    const twelveCards = RecipesResult.slice(0, twelve);
-    setRenderRecipes(twelveCards);
+    const data = searched ? searchResult : RecipesResult;
+    const twelveCards = data.slice(0, twelve);
+    SetRecipesDrinks(twelveCards);
   };
 
   const history = useHistory();
@@ -35,8 +40,7 @@ function Drinks() {
 
   useEffect(() => {
     startPage();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [isLoading, searched]);
 
   const selectCategory = (category) => {
     setToggle(category);
