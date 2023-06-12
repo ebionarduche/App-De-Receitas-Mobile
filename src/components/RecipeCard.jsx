@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function RecipeCard({ index, recipe }) {
-  const history = useHistory();
-  const { pathname } = history.location;
   const {
+    type,
     image,
     category,
     nationality,
+    alcoholicOrNot,
     name,
     doneDate,
     tags,
@@ -34,7 +33,7 @@ export default function RecipeCard({ index, recipe }) {
       <p
         data-testid={ `${index}-horizontal-top-text` }
       >
-        { pathname === '/drinks' ? category : `${nationality} - ${category}` }
+        { type === 'drink' ? alcoholicOrNot : `${nationality} - ${category}` }
       </p>
       <p
         data-testid={ `${index}-horizontal-name` }
@@ -59,9 +58,11 @@ export default function RecipeCard({ index, recipe }) {
 RecipeCard.propTypes = {
   index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
+    type: PropTypes.string,
     image: PropTypes.string,
     category: PropTypes.string,
     nationality: PropTypes.string,
+    alcoholicOrNot: PropTypes.string,
     name: PropTypes.string,
     doneDate: PropTypes.string,
     tags: PropTypes.string,
