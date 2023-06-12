@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/Login';
 import Recipes from '../pages/Recipes';
 import Profile from '../pages/Profile';
+import RecipeInProgress from '../pages/RecipeInProgress';
 // import Drinks from '../pages/Drinks';
 // import Meals from '../pages/Meals';
 import DoneRecipes from '../pages/DoneRecipes';
@@ -19,6 +20,7 @@ function Router() {
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
       <Route exact path="/:recipes/:id" component={ RecipeDetails } />
+      <Route exact path="/:recipes/:id/in-progress" component={ RecipeInProgress } />
 
     </Switch>
   );
