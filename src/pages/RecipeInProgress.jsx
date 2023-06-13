@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import '../style/Recipe.css';
+import shareIcon from '../images/shareIcon.svg';
+import '../style/RecipeInProgress.css';
 
 function RecipeDetails() {
-  const { id } = useParams();
   const history = useHistory();
   const url = history.location.pathname;
+  const { id } = useParams();
   const [imageUrl, setImageUrl] = useState('');
   const [titleUrl, setTitleUrl] = useState('');
   const [categoryUrl, setCategoryUrl] = useState('');
   const [ingredientUrl, setIngredientUrl] = useState([]);
   const [instructionsUrl, setInstructionsUrl] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
+  // const [checkbox, setCheckbox] = useState([]);
+  const [checkedIngredients, setCheckedIngredients] = useState([]);
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -58,51 +61,92 @@ function RecipeDetails() {
       });
   }, [url]);
 
-  // const ingredientP = ingredientUrl.map((ingredient, index) => (
-  //   <p
-  //     key={ ingredient + index }
-  //     data-testid={ `${ingredient}-ingredient-name-and-measure` }
-  //   >
-  //     {ingredient}
-  //   </p>
-  // ));
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+
+    if (checked) {
+      setCheckedIngredients(
+        (prevCheckedIngredients) => [...prevCheckedIngredients, value],
+      );
+    } else {
+      setCheckedIngredients(
+        (prevCheckedIngredients) => prevCheckedIngredients
+          .filter((ingredient) => ingredient !== value),
+      );
+    }
+  };
 
   return (
     <div>
       <h1 data-testid="recipe-title">{titleUrl}</h1>
+      <div>
+        <button type="button" data-testid="share-btn">
+          <img src={ shareIcon } alt="share icon" />
+          Compartilhar
+        </button>
+
+        <button type="button" data-testid="favorite-btn">
+          Favoritar
+        </button>
+      </div>
+
       <h3 data-testid="recipe-category">{categoryUrl}</h3>
       <h2>Ingredients</h2>
+
       {
         ingredientUrl.map((ingredient, index) => (
-          <ul key={ index }>
-            <li>{ingredient}</li>
-          </ul>
+          <label
+            className="container-ingredients"
+            data-testid={ `${index}-ingredient-step` }
+            htmlFor={ `checkbox-${index}` }
+            key={ index }
+            style={ checkedIngredients.includes(ingredient)
+              ? { textDecoration: 'line-through', color: 'black' } : {} }
+          >
+            <input
+              type="checkbox"
+              value={ ingredient }
+              onChange={ (e) => handleCheckboxChange(e) }
+              id={ `checkbox-${index}` }
+              name={ `checkbox-${index}` }
+            />
+            {ingredient}
+          </label>
         ))
       }
+
       <h1>instructions</h1>
       <p data-testid="instructions">{instructionsUrl}</p>
       <div>
         {url.includes('/meals') && videoUrl && (
-          // <video controls>
-          //   <source src={ videoUrl } type="video/mp4" />
-          // </video>
-          <iframe
-            title="instruction"
+          <track
+            data-testid="video"
             width="420"
             height="315"
             src={ videoUrl }
           />
         )}
       </div>
-      {imageUrl && <img
-        className="img-recipe"
-        src={ imageUrl }
-        alt="Recipe"
-        data-testid="recipe-photo"
-      />}
+      {imageUrl && (
+        <img
+          className="img-recipe"
+          src={ imageUrl }
+          alt="Recipe"
+          data-testid="recipe-photo"
+        />
+      )}
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+      >
+        Finish Recipe
+      </button>
 
     </div>
+
   );
 }
+
+//
 
 export default RecipeDetails;
