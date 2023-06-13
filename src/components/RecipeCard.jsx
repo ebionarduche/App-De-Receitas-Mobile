@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import shareIcon from '../images/shareIcon.svg';
+
 export default function RecipeCard({ index, recipe }) {
+  const { location } = window;
   const {
+    id,
     type,
     image,
     category,
@@ -13,8 +17,7 @@ export default function RecipeCard({ index, recipe }) {
     tags,
   } = recipe;
 
-  // As Tags vem da API numa string separadas por vírgula
-  const tagsP = tags.split(',').splice(0, 2).map((tag, ind) => (
+  const tagsP = tags.map((tag, ind) => (
     <p
       key={ tag + index + ind }
       data-testid={ `${index}-${tag}-horizontal-tag` }
@@ -23,11 +26,20 @@ export default function RecipeCard({ index, recipe }) {
     </p>
   ));
 
+  const urlDetail = `${location.origin}/${type}s/${id}`;
+  const [clip, setClip] = useState(false);
+
+  const shareButton = () => {
+    navigator.clipboard.writeText(urlDetail);
+    setClip(true);
+  };
+
   return (
     <div>
       <img
         src={ image }
         alt={ name }
+        width="100px"
         data-testid={ `${index}-horizontal-image` }
       />
       <p
@@ -46,11 +58,17 @@ export default function RecipeCard({ index, recipe }) {
         { doneDate }
       </p>
       { tagsP }
-      <img
+      <button
+        onClick={ shareButton }
         data-testid={ `${index}-horizontal-share-btn` }
-        src="src/images/shareIcon.svg"
+        src={ shareIcon }
         alt="share"
-      />
+      >
+        <img src={ shareIcon } alt="share-icon" />
+      </button>
+      <p>
+        { clip ? 'Link copied!' : '' }
+      </p>
     </div>
   );
 }
@@ -58,6 +76,7 @@ export default function RecipeCard({ index, recipe }) {
 RecipeCard.propTypes = {
   index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
+    id: PropTypes.string,
     type: PropTypes.string,
     image: PropTypes.string,
     category: PropTypes.string,
@@ -65,6 +84,6 @@ RecipeCard.propTypes = {
     alcoholicOrNot: PropTypes.string,
     name: PropTypes.string,
     doneDate: PropTypes.string,
-    tags: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };
