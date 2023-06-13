@@ -24,6 +24,7 @@ export default function SearchProvider({ children }) {
           global.alert('Sorry, we haven\'t found any recipes for these filters.');
           return;
         }
+        console.log(result);
         setSearchResult(result);
         if (result.length === 1) {
           history.push(pathname === '/meals'
