@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import shareIcon from '../images/shareIcon.svg';
 
@@ -34,24 +35,32 @@ export default function RecipeCard({ index, recipe }) {
     setClip(true);
   };
 
+  const history = useHistory();
+  const goToDetails = () => {
+    history.push(`/${type}s/${id}`);
+  };
+
   return (
     <div>
-      <img
+      <button
+        onClick={ goToDetails }
+        data-testid={ `${index}-horizontal-image` }
         src={ image }
         alt={ name }
-        width="100px"
-        data-testid={ `${index}-horizontal-image` }
-      />
+      >
+        <img src={ image } alt={ name } width="100px" />
+      </button>
       <p
         data-testid={ `${index}-horizontal-top-text` }
       >
         { type === 'drink' ? alcoholicOrNot : `${nationality} - ${category}` }
       </p>
-      <p
+      <button
+        onClick={ goToDetails }
         data-testid={ `${index}-horizontal-name` }
       >
         { name }
-      </p>
+      </button>
       <p
         data-testid={ `${index}-horizontal-done-date` }
       >
