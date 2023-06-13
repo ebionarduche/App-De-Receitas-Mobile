@@ -2,9 +2,9 @@ import { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import SearchContext from '../context/SearchContext';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Card from '../components/Card';
+import Footer from './Footer';
+import Header from './Header';
+import Card from './Card';
 
 function Drinks() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões

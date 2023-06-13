@@ -10,7 +10,7 @@ import SearchProvider from '../context/SearchProvider';
 describe('Header', () => {
   test('Verifica se os itens de header são Renderizados se é possivel interagir com eles', () => {
     const history = createMemoryHistory();
-    history.push('/recipes');
+    history.push('/meals');
 
     render(
       <Router history={ history }>

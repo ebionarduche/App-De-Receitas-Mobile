@@ -11,7 +11,7 @@ import SearchProvider from '../context/SearchProvider';
 describe('Testes para 90% de cobertura do Footer;', () => {
   it('Testando se os botões são renderizados em recipes:', () => {
     const history = createMemoryHistory();
-    history.push('/recipes');
+    history.push('/meals');
 
     render(
       <Router history={ history }>
@@ -28,7 +28,7 @@ describe('Testes para 90% de cobertura do Footer;', () => {
   });
   it('Testando se ao clicar no botão a pagina é redirecionada para /drinks:', () => {
     const history = createMemoryHistory();
-    history.push('/recipes');
+    history.push('/meals');
 
     render(
       <Router history={ history }>
@@ -47,7 +47,7 @@ describe('Testes para 90% de cobertura do Footer;', () => {
   });
   it('Testando se ao clicar no botão a pagina é redirecionada para /meals:', () => {
     const history = createMemoryHistory();
-    history.push('/recipes');
+    history.push('/meals');
 
     render(
       <Router history={ history }>
