@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import Header from '../components/Header';
 import RecipeCard from '../components/RecipeCard';
 
 function DoneRecipes() {
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+
+  const [filter, setFilter] = useState('all');
 
   // Não há receitas salvas no localStorage?
   if (!doneRecipes) {
@@ -40,28 +43,43 @@ function DoneRecipes() {
     );
   }
 
-  const recipeCards = doneRecipes.map((recipe, index) => (
-    <RecipeCard
-      key={ recipe.name + index }
-      index={ index }
-      recipe={ recipe }
-    />
-  ));
+  const magicNumber = -1;
+  let trybeIndex = magicNumber;
+  const recipeCards = doneRecipes.map((recipe, index) => {
+    if (filter === 'all' || recipe.type === filter) {
+      trybeIndex += 1;
+      return (
+        <RecipeCard
+          key={ recipe.name + index }
+          index={ trybeIndex }
+          recipe={ recipe }
+        />
+      );
+    }
+    return ('');
+  });
+
+  const buttonSetFilter = (selectedFilter) => {
+    setFilter(selectedFilter);
+  };
 
   return (
     <div>
       <Header title="Done Recipes" btnProfile />
       <button
+        onClick={ () => (buttonSetFilter('all')) }
         data-testid="filter-by-all-btn"
       >
         All
       </button>
       <button
+        onClick={ () => (buttonSetFilter('meal')) }
         data-testid="filter-by-meal-btn"
       >
         Meals
       </button>
       <button
+        onClick={ () => (buttonSetFilter('drink')) }
         data-testid="filter-by-drink-btn"
       >
         Drinks
