@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import '../style/Recipe.css';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CarouselCard from '../components/CarouselCard';
 
 function RecipeDetails() {
@@ -18,6 +20,7 @@ function RecipeDetails() {
   const [alcoholicUrl, setAlcoholicUrl] = useState('');
   const [nationalityUrl, setNationalityUrl] = useState('');
   const [copyMessage, setCopyMessage] = useState('');
+  const [heartIcon, setHeartIcon] = useState(whiteHeartIcon);
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -101,7 +104,10 @@ function RecipeDetails() {
     if (recipeExists === undefined) {
       favoriteRecipes.push(favoriteRecipe);
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      setHeartIcon(blackHeartIcon);
       console.log('Receita adicionada aos favoritos.');
+    } else {
+      setHeartIcon(whiteHeartIcon);
     }
   };
 
@@ -119,6 +125,7 @@ function RecipeDetails() {
     const link = window.location.href;
     clipboardCopy(link);
     setCopyMessage('Link copied!');
+    /// ///// IDEIA EXTRA: compartilhar via whatsapp
   };
 
   return (
@@ -135,7 +142,6 @@ function RecipeDetails() {
           onClick={ handleShare }
         >
           <img src={ shareIcon } alt="share icon" />
-          Compartilhar
         </button>
         <p>{copyMessage}</p>
 
@@ -144,7 +150,7 @@ function RecipeDetails() {
           data-testid="favorite-btn"
           onClick={ handleFavorite }
         >
-          Favoritar
+          <img src={ heartIcon } alt="Heart Icon" />
         </button>
       </div>
       <p data-testid="instructions">{instructionsUrl}</p>
@@ -189,7 +195,6 @@ function RecipeDetails() {
       >
         {`${buttonText()} Recipe`}
       </button>
-
     </div>
 
   );
