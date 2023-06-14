@@ -1,20 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../style/RecipeInProgress.css';
+import RecipesContext from '../context/RecipesContext';
 
 function RecipeDetails() {
   const history = useHistory();
   const url = history.location.pathname;
+  const { favoriteRecipe, checkFavorited } = useContext(RecipesContext);
   const { id } = useParams();
+  const type = url.includes('/meals') ? 'meal' : 'drink';
+  const [tags, setTags] = useState([]);
+  const [nationality, setNationality] = useState('');
+  const [alcoholicOrNot, setAlcoholicOrNot] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [titleUrl, setTitleUrl] = useState('');
   const [categoryUrl, setCategoryUrl] = useState('');
   const [ingredientUrl, setIngredientUrl] = useState([]);
   const [instructionsUrl, setInstructionsUrl] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
+  const [clipboarded, setClipboarded] = useState(false);
+  const [favorited, setFavorited] = useState(checkFavorited(id, type));
   // const [checkbox, setCheckbox] = useState([]);
   const saveCheckeds = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+  const [allIngredientsChecked, setAllIngredientChecked] = useState(false);
+  const checkAllIngredient = (myIngredients, list) => {
+    let checked = true;
+    list.forEach((ingredient) => {
+      if (!myIngredients.find((check) => check === ingredient)) { checked = false; }
+    });
+
+    setAllIngredientChecked(checked);
+  };
+  const mergeIngredients = (data) => {
+    setIngredientUrl(data);
+    checkAllIngredient(!saveCheckeds[url] ? [] : saveCheckeds[url], data);
+  };
   const [
     checkedIngredients,
     setCheckedIngredients,
@@ -45,20 +68,24 @@ function RecipeDetails() {
     fetch(API)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (url.includes('/meals')) {
           setImageUrl(data.meals[0].strMealThumb);
           setTitleUrl(data.meals[0].strMeal);
           setCategoryUrl(data.meals[0].strCategory);
-          setIngredientUrl(getIngredients(data.meals[0]));
+          mergeIngredients(getIngredients(data.meals[0]));
           setInstructionsUrl(data.meals[0].strInstructions);
           setVideoUrl(data.meals[0].strYoutube);
+          setNationality(data.meals[0].strArea);
+          setTags(data.meals[0].strTags.split(','));
         } if (url.includes('/drinks')) {
           setImageUrl(data.drinks[0].strDrinkThumb);
-
           setTitleUrl(data.drinks[0].strDrink);
           setCategoryUrl(data.drinks[0].strCategory);
-          setIngredientUrl(getIngredients(data.drinks[0]));
+          mergeIngredients(getIngredients(data.drinks[0]));
           setInstructionsUrl(data.drinks[0].strInstructions);
+          setAlcoholicOrNot(data.drinks[0].strAlcoholic);
+          setTags(!data.drinks[0].strTags ? [] : data.drinks[0].strTags.split(','));
         }
       });
   }, [url]);
@@ -84,18 +111,69 @@ function RecipeDetails() {
     }
     saveCheckeds[url] = myIngredients;
     localStorage.setItem('inProgressRecipes', JSON.stringify(saveCheckeds));
+
+    checkAllIngredient(myIngredients, ingredientUrl);
+  };
+
+  const shareButton = () => {
+    const { location } = window;
+    const urlDetail = `${location.origin}/${url.includes('/meals')
+      ? 'meals' : 'drinks'}/${id}`;
+    setClipboarded(true);
+    navigator.clipboard.writeText(urlDetail);
+  };
+
+  const favoriteButton = () => {
+    const recipe = {
+      id,
+      type,
+      nationality,
+      category: categoryUrl,
+      alcoholicOrNot,
+      name: titleUrl,
+      image: imageUrl,
+    };
+
+    setFavorited(favoriteRecipe(recipe));
+  };
+
+  const finishButton = () => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const recipe = {
+      id,
+      type,
+      nationality,
+      category: categoryUrl,
+      alcoholicOrNot,
+      name: titleUrl,
+      image: imageUrl,
+      doneDate: new Date(),
+      tags,
+    };
+    const recipeExists = doneRecipes.find((done) => done.id === id);
+    if (!recipeExists) {
+      doneRecipes.push(recipe);
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
+    history.push('/done-recipes');
   };
 
   return (
     <div>
       <h1 data-testid="recipe-title">{titleUrl}</h1>
       <div>
-        <button type="button" data-testid="share-btn">
+        <button type="button" data-testid="share-btn" onClick={ shareButton }>
           <img src={ shareIcon } alt="share icon" />
           Compartilhar
         </button>
+        <p>{ clipboarded ? 'Link copied!' : '' }</p>
 
-        <button type="button" data-testid="favorite-btn">
+        <button onClick={ favoriteButton }>
+          <img
+            data-testid="favorite-btn"
+            src={ favorited ? blackHeartIcon : whiteHeartIcon }
+            alt="favorite icon"
+          />
           Favoritar
         </button>
       </div>
@@ -149,6 +227,8 @@ function RecipeDetails() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ !allIngredientsChecked }
+        onClick={ finishButton }
       >
         Finish Recipe
       </button>
