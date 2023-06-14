@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import '../style/Recipe.css';
 import shareIcon from '../images/shareIcon.svg';
+import CarouselCard from '../components/CarouselCard';
 
 function RecipeDetails() {
   const { id } = useParams();
@@ -160,6 +161,7 @@ function RecipeDetails() {
           data-testid="recipe-photo"
         />
       )}
+      <CarouselCard />
       <button
         type="button"
         data-testid="start-recipe-btn"

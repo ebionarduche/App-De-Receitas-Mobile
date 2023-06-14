@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import SearchContext from '../context/SearchContext';
@@ -14,9 +14,9 @@ function Drinks() {
   const {
     renderRecipes, // Renderiza as receitas na tela
     setRenderRecipes, // Seta o valor de Render para a Renderização inicial
-    RecipesResult, // Resultado da API Renderização inicial
+    DrinksResult, // Resultado da API Renderização inicial
     isLoading,
-    Categorys, // Resultado da API p/botões categorias
+    drinksCategorys, // Resultado da API p/botões categorias
     fetchCategorysOnClick, // função que chama na API de categorys
   } = useContext(RecipesContext);
 
@@ -24,10 +24,10 @@ function Drinks() {
 
   const startPage = () => {
     const five = 5;
-    const fivecategorys = Categorys.slice(0, five);
+    const fivecategorys = drinksCategorys.slice(0, five);
     setRenderCategory(fivecategorys);
     const twelve = 12;
-    const data = searched ? searchResult : RecipesResult;
+    const data = searched ? searchResult : DrinksResult;
     const twelveCards = data.slice(0, twelve);
     setRenderRecipes(twelveCards);
   };
@@ -72,9 +72,9 @@ function Drinks() {
           All
         </button>
         {
-          renderCategory.map(({ strCategory }) => (
+          renderCategory.map(({ strCategory }, index) => (
             <button
-              key={ strCategory }
+              key={ strCategory + index }
               className="category-button"
               data-testid={ `${strCategory}-category-filter` }
               onClick={ () => selectCategory(strCategory) }
@@ -87,16 +87,21 @@ function Drinks() {
       <div className="cards-container">
         {
           isLoading ? 'Carregando...' : (
-            renderRecipes.map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-              <Card
-                key={ idDrink }
-                id={ idDrink }
-                thumbnail={ strDrinkThumb }
-                name={ strDrink }
-                index={ index }
-                handleClick={ handleClick }
-              />
-            ))
+            renderRecipes.map(({ idDrink, strDrinkThumb, strDrink }, index) => {
+              if (!idDrink) {
+                return '';
+              }
+              return (
+                <Card
+                  key={ strDrink + idDrink }
+                  id={ idDrink }
+                  thumbnail={ strDrinkThumb }
+                  name={ strDrink }
+                  index={ index }
+                  handleClick={ handleClick }
+                />
+              );
+            })
           )
         }
         <Footer />

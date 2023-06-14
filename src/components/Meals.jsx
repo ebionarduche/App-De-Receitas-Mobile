@@ -14,9 +14,9 @@ function Meals() {
   const {
     renderRecipes, // Renderiza as receitas na tela
     setRenderRecipes, // Seta o valor de Render para a Renderização inicial
-    RecipesResult, // Resultado da API Renderização inicial
+    MealsResult, // Resultado da API Renderização inicial
     isLoading,
-    Categorys, // Resultado da API p/botões categorias
+    mealsCategorys, // Resultado da API p/botões categorias
     fetchCategorysOnClick, // função que chama na API de categorys
   } = useContext(RecipesContext);
 
@@ -24,10 +24,10 @@ function Meals() {
 
   const startPage = () => {
     const five = 5;
-    const fivecategorys = Categorys.slice(0, five);
+    const fivecategorys = mealsCategorys.slice(0, five);
     setRenderCategory(fivecategorys);
     const twelve = 12;
-    const data = searched ? searchResult : RecipesResult;
+    const data = searched ? searchResult : MealsResult;
     const twelveCards = data.slice(0, twelve);
     setRenderRecipes(twelveCards);
   };
@@ -72,9 +72,9 @@ function Meals() {
           All
         </button>
         {
-          renderCategory.map(({ strCategory }) => (
+          renderCategory.map(({ strCategory }, index) => (
             <button
-              key={ strCategory }
+              key={ strCategory + index }
               className="category-button"
               data-testid={ `${strCategory}-category-filter` }
               onClick={ () => selectCategory(strCategory) }
@@ -89,16 +89,21 @@ function Meals() {
           isLoading ? (
             'Carregando...'
           ) : (
-            renderRecipes.map(({ idMeal, strMealThumb, strMeal }, index) => (
-              <Card
-                key={ idMeal }
-                id={ idMeal }
-                thumbnail={ strMealThumb }
-                name={ strMeal }
-                index={ index }
-                handleClick={ handleClick }
-              />
-            ))
+            renderRecipes.map(({ idMeal, strMealThumb, strMeal }, index) => {
+              if (!idMeal) {
+                return '';
+              }
+              return (
+                <Card
+                  key={ strMeal + idMeal }
+                  id={ idMeal }
+                  thumbnail={ strMealThumb }
+                  name={ strMeal }
+                  index={ index }
+                  handleClick={ handleClick }
+                />
+              );
+            })
           )
         }
         <Footer />
