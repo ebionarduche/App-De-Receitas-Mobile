@@ -77,6 +77,28 @@ function RecipesProvider({ children }) {
   }, []);
   // fazer um toggle que vai chamar esse useEffect e o StartPage
 
+  const favoriteRecipe = (recipe) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    // Verifica se a receita já está nos favoritos pelo ID
+    const recipeExists = favoriteRecipes.reduce((find, favRecipe, index) => {
+      if (favRecipe.id === recipe.id && favRecipe.type === recipe.type) {
+        return index;
+      }
+      return find;
+    }, undefined);
+
+    if (recipeExists === undefined) {
+      favoriteRecipes.push(recipe);
+    } else {
+      favoriteRecipes.splice(recipeExists, 1);
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    console.log('Receita adicionada aos favoritos.');
+
+    return recipeExists === undefined;
+  };
+
   const initialState = useMemo(
     () => ({
       MealsResult,
@@ -88,6 +110,7 @@ function RecipesProvider({ children }) {
       fetchCategorysOnClick,
       renderRecipes,
       setRenderRecipes,
+      favoriteRecipe,
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
     [
