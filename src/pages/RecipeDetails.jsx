@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import '../style/Recipe.css';
+import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import CarouselCard from '../components/CarouselCard';
 
@@ -16,6 +17,7 @@ function RecipeDetails() {
   const [videoUrl, setVideoUrl] = useState('');
   const [alcoholicUrl, setAlcoholicUrl] = useState('');
   const [nationalityUrl, setNationalityUrl] = useState('');
+  const [copyMessage, setCopyMessage] = useState('');
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -103,6 +105,22 @@ function RecipeDetails() {
     }
   };
 
+  const buttonText = () => {
+    let button = '';
+    const continueRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    if (continueRecipes === []) {
+      button = 'Start';
+    } else {
+      button = 'Continue';
+    } return button;
+  };
+
+  const handleShare = () => {
+    const link = window.location.href;
+    clipboardCopy(link);
+    setCopyMessage('Link copied!');
+  };
+
   return (
     <div>
       <h1>{id}</h1>
@@ -114,11 +132,12 @@ function RecipeDetails() {
         <button
           type="button"
           data-testid="share-btn"
-        // onClick={}
+          onClick={ handleShare }
         >
           <img src={ shareIcon } alt="share icon" />
           Compartilhar
         </button>
+        <p>{copyMessage}</p>
 
         <button
           type="button"
@@ -168,7 +187,7 @@ function RecipeDetails() {
         style={ { position: 'fixed', bottom: '0px' } }
         onClick={ () => handleClick() }
       >
-        Start Recipe
+        {`${buttonText()} Recipe`}
       </button>
 
     </div>
@@ -177,4 +196,3 @@ function RecipeDetails() {
 }
 
 export default RecipeDetails;
-//
