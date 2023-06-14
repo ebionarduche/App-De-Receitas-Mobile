@@ -6,18 +6,19 @@ import RecipesContext from './RecipesContext';
 function RecipesProvider({ children }) {
   const location = useLocation();
   const [renderRecipes, setRenderRecipes] = useState([]);
-  const [RecipesResult, setRecipesResult] = useState([]);
-  const [Categorys, setCategorys] = useState([]);
+  const [MealsResult, setMealsResult] = useState([]);
+  const [DrinksResult, setDrinksResult] = useState([]);
+  const [mealsCategorys, setMealsCategorys] = useState([]);
+  const [drinksCategorys, setDrinksCategorys] = useState([]);
   const [filterCategorys, setFilterCategorys] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const URL = location.pathname === '/meals'
-    ? 'https://www.themealdb.com/api/json/v1/1/search.php?s='
-    : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  // É necessário ter ambos os resultados
+  const URL = ['https://www.themealdb.com/api/json/v1/1/search.php?s=',
+    'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='];
 
-  const URL2 = location.pathname === '/meals'
-    ? 'https://www.themealdb.com/api/json/v1/1/list.php?c=list'
-    : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const URL2 = ['https://www.themealdb.com/api/json/v1/1/list.php?c=list',
+    'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list'];
 
   const URL3 = location.pathname === '/meals'
     ? 'https://www.themealdb.com/api/json/v1/1/filter.php?c='
@@ -27,7 +28,7 @@ function RecipesProvider({ children }) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      const result = location.pathname === '/meals' ? data.meals : data.drinks;
+      const result = !data.drinks ? data.meals : data.drinks;
       return result;
     } catch (error) {
       console.error(error);
@@ -44,15 +45,26 @@ function RecipesProvider({ children }) {
     setRenderRecipes(result.splice(0, twelve));
   };
 
+  // Este evento está acontecendo uma única vez (array como segundo parâmetro)
+  // portanto, é necessário carregar tantos os drinks quanto os meals
   useEffect(() => {
     const fetchAllRecipes = async () => {
       try {
-        const [recipesResult, categorys] = await Promise.all([
-          fetchRecipes(URL),
-          fetchRecipes(URL2),
+        const [
+          mealsResult,
+          drinksResult,
+          mlsCategorys,
+          drnksCategorys,
+        ] = await Promise.all([
+          fetchRecipes(URL[0]),
+          fetchRecipes(URL[1]),
+          fetchRecipes(URL2[0]),
+          fetchRecipes(URL2[1]),
         ]);
-        setRecipesResult(recipesResult);
-        setCategorys(categorys);
+        setMealsResult(mealsResult);
+        setDrinksResult(drinksResult);
+        setMealsCategorys(mlsCategorys);
+        setDrinksCategorys(drnksCategorys);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -63,16 +75,27 @@ function RecipesProvider({ children }) {
   }, []);
   // fazer um toggle que vai chamar esse useEffect e o StartPage
 
-  const initialState = useMemo(() => ({
-    RecipesResult,
-    isLoading,
-    Categorys,
-    filterCategorys,
-    fetchCategorysOnClick,
-    renderRecipes,
-    setRenderRecipes,
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [RecipesResult, isLoading, Categorys, renderRecipes]);
+  const initialState = useMemo(
+    () => ({
+      MealsResult,
+      DrinksResult,
+      isLoading,
+      mealsCategorys,
+      drinksCategorys,
+      filterCategorys,
+      fetchCategorysOnClick,
+      renderRecipes,
+      setRenderRecipes,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }),
+    [
+      MealsResult,
+      DrinksResult,
+      isLoading,
+      mealsCategorys,
+      drinksCategorys,
+      renderRecipes],
+  );
 
   return (
     <RecipesContext.Provider value={ initialState }>
