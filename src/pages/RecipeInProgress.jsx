@@ -14,7 +14,11 @@ function RecipeDetails() {
   const [instructionsUrl, setInstructionsUrl] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
   // const [checkbox, setCheckbox] = useState([]);
-  const [checkedIngredients, setCheckedIngredients] = useState([]);
+  const saveCheckeds = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+  const [
+    checkedIngredients,
+    setCheckedIngredients,
+  ] = useState(!saveCheckeds[url] ? [] : saveCheckeds[url]);
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -34,10 +38,8 @@ function RecipeDetails() {
 
     if (url.includes('/meals')) {
       API = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-      console.log(API);
     } if (url.includes('/drinks')) {
       API = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-      console.log(API);
     }
 
     fetch(API)
@@ -63,17 +65,25 @@ function RecipeDetails() {
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
+    const myIngredients = saveCheckeds[url] || [];
 
     if (checked) {
       setCheckedIngredients(
         (prevCheckedIngredients) => [...prevCheckedIngredients, value],
       );
+      myIngredients.push(value);
     } else {
       setCheckedIngredients(
         (prevCheckedIngredients) => prevCheckedIngredients
           .filter((ingredient) => ingredient !== value),
       );
+      const index = myIngredients.indexOf(value);
+      console.log(index);
+      myIngredients.splice(index, 1);
+      console.log(myIngredients);
     }
+    saveCheckeds[url] = myIngredients;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(saveCheckeds));
   };
 
   return (
@@ -109,6 +119,7 @@ function RecipeDetails() {
               onChange={ (e) => handleCheckboxChange(e) }
               id={ `checkbox-${index}` }
               name={ `checkbox-${index}` }
+              defaultChecked={ checkedIngredients.includes(ingredient) }
             />
             {ingredient}
           </label>
