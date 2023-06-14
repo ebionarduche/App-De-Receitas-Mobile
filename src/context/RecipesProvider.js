@@ -6,6 +6,8 @@ import RecipesContext from './RecipesContext';
 function RecipesProvider({ children }) {
   const location = useLocation();
   const [renderRecipes, setRenderRecipes] = useState([]);
+  // É necessário ter o Result tanto para meals quanto para drinks
+  // a requisição é feita uma única vez
   const [MealsResult, setMealsResult] = useState([]);
   const [DrinksResult, setDrinksResult] = useState([]);
   const [mealsCategorys, setMealsCategorys] = useState([]);
@@ -13,7 +15,7 @@ function RecipesProvider({ children }) {
   const [filterCategorys, setFilterCategorys] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // É necessário ter ambos os resultados
+  // É necessário fazer requisição para ambos endpoints
   const URL = ['https://www.themealdb.com/api/json/v1/1/search.php?s=',
     'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='];
 
