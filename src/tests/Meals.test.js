@@ -71,7 +71,6 @@ describe('Teste Componente Meals', () => {
   });
   it('Testa se ao cliclar no card é redirecionado para tela de detalhes', async () => {
     const { history } = renderWithRouterAndContext(<App />, '/meals');
-    console.log('Esse é o history ======>', history);
 
     const corba = await screen.findByRole('button', { name: /corba/i });
 
