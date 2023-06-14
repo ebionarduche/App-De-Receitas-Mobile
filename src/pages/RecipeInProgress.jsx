@@ -12,6 +12,7 @@ function RecipeDetails() {
   const { favoriteRecipe, checkFavorited } = useContext(RecipesContext);
   const { id } = useParams();
   const type = url.includes('/meals') ? 'meal' : 'drink';
+  const [tags, setTags] = useState([]);
   const [nationality, setNationality] = useState('');
   const [alcoholicOrNot, setAlcoholicOrNot] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -67,6 +68,7 @@ function RecipeDetails() {
     fetch(API)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (url.includes('/meals')) {
           setImageUrl(data.meals[0].strMealThumb);
           setTitleUrl(data.meals[0].strMeal);
@@ -75,6 +77,7 @@ function RecipeDetails() {
           setInstructionsUrl(data.meals[0].strInstructions);
           setVideoUrl(data.meals[0].strYoutube);
           setNationality(data.meals[0].strArea);
+          setTags(data.meals[0].strTags.split(','));
         } if (url.includes('/drinks')) {
           setImageUrl(data.drinks[0].strDrinkThumb);
           setTitleUrl(data.drinks[0].strDrink);
@@ -82,6 +85,7 @@ function RecipeDetails() {
           mergeIngredients(getIngredients(data.drinks[0]));
           setInstructionsUrl(data.drinks[0].strInstructions);
           setAlcoholicOrNot(data.drinks[0].strAlcoholic);
+          setTags(!data.drinks[0].strTags ? [] : data.drinks[0].strTags.split(','));
         }
       });
   }, [url]);
@@ -131,6 +135,27 @@ function RecipeDetails() {
     };
 
     setFavorited(favoriteRecipe(recipe));
+  };
+
+  const finishButton = () => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const recipe = {
+      id,
+      type,
+      nationality,
+      category: categoryUrl,
+      alcoholicOrNot,
+      name: titleUrl,
+      image: imageUrl,
+      doneDate: new Date(),
+      tags,
+    };
+    const recipeExists = doneRecipes.find((done) => done.id === id);
+    if (!recipeExists) {
+      doneRecipes.push(recipe);
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
+    history.push('/done-recipes');
   };
 
   return (
@@ -203,6 +228,7 @@ function RecipeDetails() {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
+        onClick={ finishButton }
       >
         Finish Recipe
       </button>
