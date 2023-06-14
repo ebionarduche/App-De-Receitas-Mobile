@@ -51,8 +51,8 @@ function DoneRecipes() {
     }
     return ('');
   });
-  console.log(recipeCards);
-  console.log(doneRecipes);
+  // console.log(recipeCards);
+  // console.log(doneRecipes);
 
   const buttonSetFilter = (selectedFilter) => {
     setFilter(selectedFilter);

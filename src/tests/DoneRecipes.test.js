@@ -49,11 +49,13 @@ describe('DoneRecipes', () => {
     const meals = screen.getByRole('button', { name: /meals/i });
     userEvent.click(meals);
 
+    screen.getByRole('img', { name: /spicy arrabiata penne/i });
     expect(screen.queryByText(/alcoholic/i)).not.toBeInTheDocument();
 
     const drinks = screen.getByRole('button', { name: /drinks/i });
     userEvent.click(drinks);
 
+    screen.getByRole('img', { name: /aquamarine/i });
     expect(screen.queryByText(/italian - vegetarian/i)).not.toBeInTheDocument();
 
     const all = screen.getByRole('button', { name: /all/i });
@@ -62,10 +64,25 @@ describe('DoneRecipes', () => {
     screen.getByText(/italian - vegetarian/i);
     screen.getByText(/alcoholic/i);
   });
-  it('renderiza a página de Receitas Feitas com os cards de receitas', () => {
+  it('Testa se o que renderiza caso o localStorage esteja vazio', () => {
     renderWithRouterAndContext(<App />, doneRecipe);
 
     const horizontalTopText = screen.queryByTestId('0-horizontal-top-text');
     expect(horizontalTopText).not.toBeInTheDocument();
+  });
+  it('Testa se é redirecionado para telas de detalhes', () => {
+    localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    const { history } = renderWithRouterAndContext(<App />, doneRecipe);
+
+    const btnRecipeMeals = screen.getByRole('img', { name: /spicy arrabiata penne/i });
+
+    userEvent.click(btnRecipeMeals);
+
+    expect(history.location.pathname).toBe('/meals/52771');
+  });
+  it('Testa se o botão share exibe uma tag html escrita "Link copied!" ', () => {
+    localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    renderWithRouterAndContext(<App />, doneRecipe);
+    screen.getByTestId('0-horizontal-share-btn');
   });
 });
