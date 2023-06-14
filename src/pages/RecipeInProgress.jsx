@@ -24,6 +24,19 @@ function RecipeDetails() {
   const [favorited, setFavorited] = useState(checkFavorited(id, type));
   // const [checkbox, setCheckbox] = useState([]);
   const saveCheckeds = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+  const [allIngredientsChecked, setAllIngredientChecked] = useState(false);
+  const checkAllIngredient = (myIngredients, list) => {
+    let checked = true;
+    list.forEach((ingredient) => {
+      if (!myIngredients.find((check) => check === ingredient)) { checked = false; }
+    });
+
+    setAllIngredientChecked(checked);
+  };
+  const mergeIngredients = (data) => {
+    setIngredientUrl(data);
+    checkAllIngredient(!saveCheckeds[url] ? [] : saveCheckeds[url], data);
+  };
   const [
     checkedIngredients,
     setCheckedIngredients,
@@ -58,7 +71,7 @@ function RecipeDetails() {
           setImageUrl(data.meals[0].strMealThumb);
           setTitleUrl(data.meals[0].strMeal);
           setCategoryUrl(data.meals[0].strCategory);
-          setIngredientUrl(getIngredients(data.meals[0]));
+          mergeIngredients(getIngredients(data.meals[0]));
           setInstructionsUrl(data.meals[0].strInstructions);
           setVideoUrl(data.meals[0].strYoutube);
           setNationality(data.meals[0].strArea);
@@ -66,7 +79,7 @@ function RecipeDetails() {
           setImageUrl(data.drinks[0].strDrinkThumb);
           setTitleUrl(data.drinks[0].strDrink);
           setCategoryUrl(data.drinks[0].strCategory);
-          setIngredientUrl(getIngredients(data.drinks[0]));
+          mergeIngredients(getIngredients(data.drinks[0]));
           setInstructionsUrl(data.drinks[0].strInstructions);
           setAlcoholicOrNot(data.drinks[0].strAlcoholic);
         }
@@ -94,6 +107,8 @@ function RecipeDetails() {
     }
     saveCheckeds[url] = myIngredients;
     localStorage.setItem('inProgressRecipes', JSON.stringify(saveCheckeds));
+
+    checkAllIngredient(myIngredients, ingredientUrl);
   };
 
   const shareButton = () => {
@@ -187,6 +202,7 @@ function RecipeDetails() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ !allIngredientsChecked }
       >
         Finish Recipe
       </button>
