@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import '../style/Recipe.css';
+import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CarouselCard from '../components/CarouselCard';
 
 function RecipeDetails() {
@@ -16,6 +19,8 @@ function RecipeDetails() {
   const [videoUrl, setVideoUrl] = useState('');
   const [alcoholicUrl, setAlcoholicUrl] = useState('');
   const [nationalityUrl, setNationalityUrl] = useState('');
+  const [copyMessage, setCopyMessage] = useState('');
+  const [heartIcon, setHeartIcon] = useState(whiteHeartIcon);
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -99,8 +104,28 @@ function RecipeDetails() {
     if (recipeExists === undefined) {
       favoriteRecipes.push(favoriteRecipe);
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      setHeartIcon(blackHeartIcon);
       console.log('Receita adicionada aos favoritos.');
+    } else {
+      setHeartIcon(whiteHeartIcon);
     }
+  };
+
+  const buttonText = () => {
+    let button = '';
+    const continueRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    if (continueRecipes === []) {
+      button = 'Start';
+    } else {
+      button = 'Continue';
+    } return button;
+  };
+
+  const handleShare = () => {
+    const link = window.location.href;
+    clipboardCopy(link);
+    setCopyMessage('Link copied!');
+    /// ///// IDEIA EXTRA: compartilhar via whatsapp
   };
 
   return (
@@ -114,18 +139,18 @@ function RecipeDetails() {
         <button
           type="button"
           data-testid="share-btn"
-        // onClick={}
+          onClick={ handleShare }
         >
           <img src={ shareIcon } alt="share icon" />
-          Compartilhar
         </button>
+        <p>{copyMessage}</p>
 
         <button
           type="button"
           data-testid="favorite-btn"
           onClick={ handleFavorite }
         >
-          Favoritar
+          <img src={ heartIcon } alt="Heart Icon" />
         </button>
       </div>
       <p data-testid="instructions">{instructionsUrl}</p>
@@ -168,13 +193,11 @@ function RecipeDetails() {
         style={ { position: 'fixed', bottom: '0px' } }
         onClick={ () => handleClick() }
       >
-        Start Recipe
+        {`${buttonText()} Recipe`}
       </button>
-
     </div>
 
   );
 }
 
 export default RecipeDetails;
-//
