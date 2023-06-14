@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import RecipesContext from '../context/RecipesContext';
 
 import shareIcon from '../images/shareIcon.svg';
 
-export default function RecipeCard({ index, recipe }) {
+export default function RecipeCard({ index, recipe, reload }) {
   const { location } = window;
   const {
     id,
@@ -18,7 +21,9 @@ export default function RecipeCard({ index, recipe }) {
     tags,
   } = recipe;
 
-  const tagsP = tags.map((tag, ind) => (
+  const { favoriteRecipe, checkFavorited } = useContext(RecipesContext);
+
+  const tagsP = !tags ? [] : tags.map((tag, ind) => (
     <p
       key={ tag + index + ind }
       data-testid={ `${index}-${tag}-horizontal-tag` }
@@ -33,6 +38,11 @@ export default function RecipeCard({ index, recipe }) {
   const shareButton = () => {
     navigator.clipboard.writeText(urlDetail);
     setClip(true);
+  };
+
+  const favoriteButton = () => {
+    favoriteRecipe(recipe);
+    reload();
   };
 
   const history = useHistory();
@@ -75,6 +85,14 @@ export default function RecipeCard({ index, recipe }) {
       >
         <img src={ shareIcon } alt="share-icon" />
       </button>
+      <button onClick={ favoriteButton }>
+        <img
+          data-testid={ `${index}-horizontal-favorite-btn` }
+          src={ checkFavorited(id, type) ? blackHeartIcon : whiteHeartIcon }
+          alt="favorite icon"
+        />
+        Favoritar
+      </button>
       <p>
         { clip ? 'Link copied!' : '' }
       </p>
@@ -84,6 +102,7 @@ export default function RecipeCard({ index, recipe }) {
 
 RecipeCard.propTypes = {
   index: PropTypes.number.isRequired,
+  reload: PropTypes.func.isRequired,
   recipe: PropTypes.shape({
     id: PropTypes.string,
     type: PropTypes.string,
