@@ -109,7 +109,7 @@ function RecipesProvider({ children }) {
       return find;
     }, undefined);
 
-    return recipeExists === undefined;
+    return recipeExists !== undefined;
   };
 
   const initialState = useMemo(

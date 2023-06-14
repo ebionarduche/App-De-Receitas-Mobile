@@ -9,9 +9,9 @@ import RecipesContext from '../context/RecipesContext';
 function RecipeDetails() {
   const history = useHistory();
   const url = history.location.pathname;
-  const { favoriteRecipe } = useContext(RecipesContext);
+  const { favoriteRecipe, checkFavorited } = useContext(RecipesContext);
   const { id } = useParams();
-  const [type, setType] = useState('meal');
+  const type = url.includes('/meals') ? 'meal' : 'drink';
   const [nationality, setNationality] = useState('');
   const [alcoholicOrNot, setAlcoholicOrNot] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -21,6 +21,7 @@ function RecipeDetails() {
   const [instructionsUrl, setInstructionsUrl] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
   const [clipboarded, setClipboarded] = useState(false);
+  const [favorited, setFavorited] = useState(checkFavorited(id, type));
   // const [checkbox, setCheckbox] = useState([]);
   const saveCheckeds = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
   const [
@@ -63,7 +64,6 @@ function RecipeDetails() {
           setNationality(data.meals[0].strArea);
         } if (url.includes('/drinks')) {
           setImageUrl(data.drinks[0].strDrinkThumb);
-          setType('drink');
           setTitleUrl(data.drinks[0].strDrink);
           setCategoryUrl(data.drinks[0].strCategory);
           setIngredientUrl(getIngredients(data.drinks[0]));
@@ -115,7 +115,7 @@ function RecipeDetails() {
       image: imageUrl,
     };
 
-    favoriteRecipe(recipe);
+    setFavorited(favoriteRecipe(recipe));
   };
 
   return (
@@ -131,7 +131,7 @@ function RecipeDetails() {
         <button onClick={ favoriteButton }>
           <img
             data-testid="favorite-btn"
-            src={ whiteHeartIcon }
+            src={ favorited ? blackHeartIcon : whiteHeartIcon }
             alt="favorite icon"
           />
           Favoritar
