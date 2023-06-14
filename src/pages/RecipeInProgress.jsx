@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../style/RecipeInProgress.css';
+import RecipesContext from '../context/RecipesContext';
 
 function RecipeDetails() {
   const history = useHistory();
   const url = history.location.pathname;
+  const { favoriteRecipe } = useContext(RecipesContext);
   const { id } = useParams();
+  const [type, setType] = useState('meal');
+  const [nationality, setNationality] = useState('');
+  const [alcoholicOrNot, setAlcoholicOrNot] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [titleUrl, setTitleUrl] = useState('');
   const [categoryUrl, setCategoryUrl] = useState('');
   const [ingredientUrl, setIngredientUrl] = useState([]);
   const [instructionsUrl, setInstructionsUrl] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
+  const [clipboarded, setClipboarded] = useState(false);
   // const [checkbox, setCheckbox] = useState([]);
   const saveCheckeds = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
   const [
@@ -52,13 +60,15 @@ function RecipeDetails() {
           setIngredientUrl(getIngredients(data.meals[0]));
           setInstructionsUrl(data.meals[0].strInstructions);
           setVideoUrl(data.meals[0].strYoutube);
+          setNationality(data.meals[0].strArea);
         } if (url.includes('/drinks')) {
           setImageUrl(data.drinks[0].strDrinkThumb);
-
+          setType('drink');
           setTitleUrl(data.drinks[0].strDrink);
           setCategoryUrl(data.drinks[0].strCategory);
           setIngredientUrl(getIngredients(data.drinks[0]));
           setInstructionsUrl(data.drinks[0].strInstructions);
+          setAlcoholicOrNot(data.drinks[0].strAlcoholic);
         }
       });
   }, [url]);
@@ -86,16 +96,44 @@ function RecipeDetails() {
     localStorage.setItem('inProgressRecipes', JSON.stringify(saveCheckeds));
   };
 
+  const shareButton = () => {
+    const { location } = window;
+    const urlDetail = `${location.origin}/${url.includes('/meals')
+      ? 'meals' : 'drinks'}/${id}`;
+    setClipboarded(true);
+    navigator.clipboard.writeText(urlDetail);
+  };
+
+  const favoriteButton = () => {
+    const recipe = {
+      id,
+      type,
+      nationality,
+      category: categoryUrl,
+      alcoholicOrNot,
+      name: titleUrl,
+      image: imageUrl,
+    };
+
+    favoriteRecipe(recipe);
+  };
+
   return (
     <div>
       <h1 data-testid="recipe-title">{titleUrl}</h1>
       <div>
-        <button type="button" data-testid="share-btn">
+        <button type="button" data-testid="share-btn" onClick={ shareButton }>
           <img src={ shareIcon } alt="share icon" />
           Compartilhar
         </button>
+        <p>{ clipboarded ? 'Link copied!' : '' }</p>
 
-        <button type="button" data-testid="favorite-btn">
+        <button onClick={ favoriteButton }>
+          <img
+            data-testid="favorite-btn"
+            src={ whiteHeartIcon }
+            alt="favorite icon"
+          />
           Favoritar
         </button>
       </div>
