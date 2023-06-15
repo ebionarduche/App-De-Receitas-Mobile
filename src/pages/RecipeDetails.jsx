@@ -82,14 +82,6 @@ function RecipeDetails() {
   }, [id, url]);
 
   const handleFavorite = () => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-
-    // if (favoriteRecipes.length === 0) {
-    //   setHeartIcon(whiteHeartIcon);
-    // } else {
-    //   setHeartIcon(blackHeartIcon);
-    // }
-
     const favoriteRecipe = {
       id,
       type: '',
