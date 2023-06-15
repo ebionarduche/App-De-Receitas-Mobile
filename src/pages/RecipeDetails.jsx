@@ -122,8 +122,8 @@ function RecipeDetails() {
 
   const buttonText = () => {
     let button = '';
-    const continueRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    if (continueRecipes === []) {
+    const continueRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || '';
+    if (continueRecipes === '') {
       button = 'Start';
     } else {
       button = 'Continue';
