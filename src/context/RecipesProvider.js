@@ -94,9 +94,22 @@ function RecipesProvider({ children }) {
       favoriteRecipes.splice(recipeExists, 1);
     }
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-    console.log('Receita adicionada aos favoritos.');
 
     return recipeExists === undefined;
+  };
+
+  const checkFavorited = (id, type) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
+    // Verifica se a receita já está nos favoritos pelo ID
+    const recipeExists = favoriteRecipes.reduce((find, favRecipe, index) => {
+      if (favRecipe.id === id && favRecipe.type === type) {
+        return index;
+      }
+      return find;
+    }, undefined);
+
+    return recipeExists !== undefined;
   };
 
   const initialState = useMemo(
@@ -111,6 +124,7 @@ function RecipesProvider({ children }) {
       renderRecipes,
       setRenderRecipes,
       favoriteRecipe,
+      checkFavorited,
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
     [

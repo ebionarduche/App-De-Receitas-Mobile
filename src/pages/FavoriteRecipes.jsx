@@ -1,9 +1,9 @@
-import Header from '../components/Header';
+import SaveRecipes from '../components/SaveRecipes';
 
 function FavoritesRecipes() {
   return (
     <div>
-      <Header title="Favorite Recipes" btnProfile />
+      <SaveRecipes title="Favorite Recipes" localKey="favoriteRecipes" />
     </div>
   );
 }
