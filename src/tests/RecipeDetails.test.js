@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import renderWithRouterAndContext from './helpers/RenderWithContext';
@@ -55,9 +55,6 @@ describe('Teste Componente Meals', () => {
 
   it('Testa se os elementos aparecem na tela', async () => {
     renderWithRouterAndContext(<App />, '/meals/52977');
-
-    // const corba = screen.getByText(/corba/i);
-    // expect(corba).toBeInTheDocument();
 
     const buttonShare = screen.getByRole('img', { name: /share icon/i });
     expect(buttonShare).toBeInTheDocument();
