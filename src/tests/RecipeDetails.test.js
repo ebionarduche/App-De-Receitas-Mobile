@@ -83,7 +83,7 @@ describe('Teste Componente RecipeDetails ', () => {
   });
 
   it('Testa se o LocalStorage é atualizado quando clica em favorito [Meals]', async () => {
-    localStorage.clear(); // Clearing localStorage before the test
+    localStorage.clear();
     renderWithRouterAndContext(<App />, arrabiata);
     await waitFor(() => screen.getByText(/Spicy Arrabiata Penne/i));
 
@@ -101,7 +101,6 @@ describe('Teste Componente RecipeDetails ', () => {
       userEvent.click(favoriteBtn);
     });
 
-    // Check if the recipe is removed from favorites
     favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     expect(favoriteRecipes).toEqual([]);
   });
@@ -125,7 +124,6 @@ describe('Teste Componente RecipeDetails ', () => {
       userEvent.click(favoriteBtn);
     });
 
-    // Check if the recipe is removed from favorites
     favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     expect(favoriteRecipes).toEqual([]);
   });
@@ -154,7 +152,7 @@ describe('Teste Componente RecipeDetails ', () => {
     expect(history.location.pathname).toBe('/drinks/178319/in-progress');
   });
 
-  it('Testa ao clicar ', async () => {
+  it('Testa ao clicar em compartilhar o link é copiado e a mensagem aparece ', async () => {
     const clipboardCopyMock = jest.fn();
     const mockClipboard = {
       writeText: clipboardCopyMock,
@@ -163,26 +161,21 @@ describe('Teste Componente RecipeDetails ', () => {
 
     renderWithRouterAndContext(<App />, aquamarine);
 
-    // Mock do valor do link da janela
     const link = 'http://example.com';
     delete window.location;
     window.location = { href: link };
 
-    // Verifica se a mensagem de cópia está vazia inicialmente
     const copyMessage = screen.queryByText(/Link copied!/i);
     expect(copyMessage).not.toBeInTheDocument();
 
-    // Clica no botão de compartilhamento
     const shareButton = screen.getByRole('button', { name: /share icon/i });
     userEvent.click(shareButton);
 
     const copyMessage1 = screen.getByText(/Link copied!/i);
     expect(copyMessage1).toBeInTheDocument();
 
-    // Verifica se a função de cópia para a área de transferência foi chamada com o link
     expect(clipboardCopyMock).toHaveBeenCalledWith(link);
 
-    // Verifica se a mensagem de cópia foi atualizada
     expect(copyMessage1).toHaveTextContent(/Link copied!/i);
   });
 });
