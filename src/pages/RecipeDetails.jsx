@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import '../style/Recipe.css';
 import clipboardCopy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CarouselCard from '../components/CarouselCard';
+import '../style/RecipeDetails.css';
 // import RecipesContext from '../context/RecipesContext';
 
 function RecipeDetails() {
@@ -138,73 +138,88 @@ function RecipeDetails() {
   };
 
   return (
-    <div>
-      <h1>{id}</h1>
-      <p data-testid="recipe-title">{titleUrl}</p>
-      {url.includes('/meal') && titleUrl && (
-        <p data-testid="recipe-category">{categoryUrl}</p>
-      )}
-      <div>
-        <button
-          type="button"
-          data-testid="share-btn"
-          onClick={ handleShare }
-        >
-          <img src={ shareIcon } alt="share icon" />
-        </button>
-        <p>{copyMessage}</p>
-
-        <button
-          src={ heartIcon }
-          type="button"
-          data-testid="favorite-btn"
-          onClick={ handleFavorite }
-        >
-          <img src={ heartIcon } alt="Heart Icon" />
-        </button>
-      </div>
-      <p data-testid="instructions">{instructionsUrl}</p>
-      {url.includes('/drinks') && instructionsUrl && (
-        <p data-testid="recipe-category">{alcoholicUrl}</p>
-      )}
-      {ingredientUrl.map((ingredient, index) => (
-        <div key={ index }>
-          <p
-            data-testid={
-              `${index}-ingredient-name-and-measure`
-            }
-          >
-            {`${ingredient.measure} ${ingredient.ingredient}`}
-          </p>
-        </div>
-      ))}
-      <div>
-        {url.includes('/meals') && videoUrl && (
-          <track
-            data-testid="video"
-            width="420"
-            height="315"
-            src={ videoUrl }
-          />
-        )}
-      </div>
+    <div className="container-recipe-details">
       {imageUrl && (
         <img
-          className="img-recipe"
+          className="img-recipe-details"
           src={ imageUrl }
           alt="Recipe"
           data-testid="recipe-photo"
         />
       )}
-      <CarouselCard />
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        style={ { position: 'fixed', bottom: '0px' } }
-        onClick={ () => handleClick() }
+      <div
+        className="container-content-recipe-details"
+        data-testid="recipe-title"
       >
-        {`${buttonText()} Recipe`}
-      </button>
+        <h1 className="title-recipe-details">
+          {titleUrl}
+        </h1>
+        {url.includes('/meal') && titleUrl && (
+          <h2 className="center-title" data-testid="recipe-category">{categoryUrl}</h2>
+        )}
+
+        {url.includes('/drinks') && instructionsUrl && (
+          <p data-testid="recipe-category">{alcoholicUrl}</p>
+        )}
+        <div className="buttons-icon-container">
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ handleShare }
+          >
+            <img src={ shareIcon } alt="share icon" />
+          </button>
+          <p>{copyMessage}</p>
+
+          <button
+            src={ heartIcon }
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ handleFavorite }
+          >
+            <img src={ heartIcon } alt="Heart Icon" />
+          </button>
+        </div>
+        <h3 className="center-title">Ingredients</h3>
+        {ingredientUrl.map((ingredient, index) => (
+          <div key={ index }>
+            <ul>
+              <li
+                data-testid={
+                  `${index}-ingredient-name-and-measure`
+                }
+              >
+                {`${ingredient.measure} ${ingredient.ingredient}`}
+              </li>
+            </ul>
+          </div>
+        ))}
+        <h3 className="center-title">Instructions</h3>
+        <p data-testid="instructions">{instructionsUrl}</p>
+
+        <div className="video-recipe-details">
+          {url.includes('/meals') && videoUrl && (
+            <iframe
+              title="youtube-player"
+              data-testid="video"
+              width="250"
+              // height="315"
+              src={ videoUrl.replace('watch?v=', 'embed/') }
+            />
+          )}
+        </div>
+      </div>
+      <CarouselCard />
+      <div className="button-play-recipes">
+        <button
+          type="button"
+          data-testid="start-recipe-btn"
+          style={ { position: 'fixed', bottom: '0px' } }
+          onClick={ () => handleClick() }
+        >
+          {`${buttonText()} Recipe`}
+        </button>
+      </div>
     </div>
 
   );
