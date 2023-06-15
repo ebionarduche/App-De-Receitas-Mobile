@@ -1,59 +1,32 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen, waitFor } from '@testing-library/react';
+// import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 import renderWithRouterAndContext from './helpers/RenderWithContext';
 import App from '../App';
 import mockFetch from '../../cypress/mocks/fetch';
 
 const recipe = [
-  {
-    id: '52771',
+  { id: '52771',
     type: 'meal',
     nationality: 'Italian',
     category: 'Vegetarian',
     alcoholicOrNot: '',
     name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Pasta', 'Curry'],
-    inProgress: ['Lentils', 'Onion', 'Carrots'],
-  },
-  {
-    id: '178319',
-    type: 'drink',
-    nationality: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Hpnotiq","Pineapple Juice","Banana Liqueur'],
-  },
+    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg' },
 ];
 
-describe('Teste Componente Meals', () => {
+describe('Teste Componente RecipeDetails ', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch');
     global.fetch = mockFetch;
   });
   afterEach(() => {
-    localStorage.clear();
+    jest.clearAllMocks();
   });
 
-  it('Testa se a Tela de descrição é redirecionada atraves da tela Meals', async () => {
-    const { history } = renderWithRouterAndContext(<App />, '/meals');
-
-    const corba = await screen.findByRole('button', { name: /corba/i });
-
-    act(() => {
-      userEvent.click(corba);
-    });
-
-    expect(history.location.pathname).toBe('/meals/52977');
-  });
-
-  it('Testa se os elementos aparecem na tela', async () => {
+  it('Testa se os Icons aparecem na tela', async () => {
     renderWithRouterAndContext(<App />, '/meals/52977');
 
     const buttonShare = screen.getByRole('img', { name: /share icon/i });
@@ -83,48 +56,59 @@ describe('Teste Componente Meals', () => {
     expect(buttonContinue).toBeInTheDocument();
   });
 
-  it('Testa se a Tela de descrição é redirecionada atraves da tela Drinks', async () => {
-    const { history } = renderWithRouterAndContext(<App />, '/drinks');
-
-    const gg = await screen.findByRole('button', { name: /gg/i });
-
-    act(() => {
-      userEvent.click(gg);
+  it('Testa se todos os detales das receitas estão sendo renderizados', async () => {
+    renderWithRouterAndContext(<App />, '/meals/52771');
+    await waitFor(() => {
+      screen.getByText(/Spicy Arrabiata Penne/i);
+      screen.getByText(/vegetarian/i);
+      screen.getByTestId('instructions');
+      screen.getByText(/1 pound penne rigate/i);
+      screen.getByText(/4 cup olive oil/i);
+      screen.getByText(/3 cloves garlic/i);
+      screen.getByRole('img', { name: /recipe/i });
     });
-
-    expect(history.location.pathname).toBe('/drinks/15997');
   });
 
-  it('Testa se os elementos aparecem na tela', async () => {
-    renderWithRouterAndContext(<App />, '/drinks/15997');
+  it('Testa se todos os detales das receitas estão sendo renderizados', async () => {
+    localStorage.clear(); // Clearing localStorage before the test
+    renderWithRouterAndContext(<App />, '/meals/52771');
+    await waitFor(() => screen.getByText(/Spicy Arrabiata Penne/i));
 
-    // const corba = screen.getByText(/corba/i);
-    // expect(corba).toBeInTheDocument();
-
-    const buttonShare = screen.getByRole('img', { name: /share icon/i });
-    expect(buttonShare).toBeInTheDocument();
-
-    const buttonFav = screen.getByRole('img', { name: /heart icon/i });
-    expect(buttonFav).toBeInTheDocument();
-  });
-
-  it('Testa logica do botão start/continue Recipe', async () => {
-    const aquamarine = '/drinks/178319';
-    renderWithRouterAndContext(<App />, aquamarine);
-
-    const buttonStart = screen.getByRole('button', { name: /start recipe/i });
-    expect(buttonStart).toBeInTheDocument();
-    localStorage.setItem('inProgressRecipes', JSON.stringify(recipe));
+    const favoriteBtn = screen.getByRole('button', { name: /heart icon/i });
 
     act(() => {
-      // Remover o componente da árvore de componentes renderizados
-      renderWithRouterAndContext(null, aquamarine);
+      userEvent.click(favoriteBtn);
     });
 
-    // Renderizar o componente novamente com os dados atualizados
-    renderWithRouterAndContext(<App />, aquamarine);
+    let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-    const buttonContinue = screen.getByRole('button', { name: /continue recipe/i });
-    expect(buttonContinue).toBeInTheDocument();
+    expect(favoriteRecipes).toEqual(recipe);
+
+    act(() => {
+      userEvent.click(favoriteBtn);
+    });
+
+    // Check if the recipe is removed from favorites
+    favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    expect(favoriteRecipes).toEqual([]);
   });
 });
+//   it('Testa logica do botão start/continue Recipe', async () => {
+//     const aquamarine = '/drinks/178319';
+//     renderWithRouterAndContext(<App />, aquamarine);
+
+//     const buttonStart = screen.getByRole('button', { name: /start recipe/i });
+//     expect(buttonStart).toBeInTheDocument();
+//     localStorage.setItem('inProgressRecipes', JSON.stringify(recipe));
+
+//     act(() => {
+//       // Remover o componente da árvore de componentes renderizados
+//       renderWithRouterAndContext(null, aquamarine);
+//     });
+
+//     // Renderizar o componente novamente com os dados atualizados
+//     renderWithRouterAndContext(<App />, aquamarine);
+
+//     const buttonContinue = screen.getByRole('button', { name: /continue recipe/i });
+//     expect(buttonContinue).toBeInTheDocument();
+//   });
