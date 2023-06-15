@@ -6,6 +6,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import CarouselCard from '../components/CarouselCard';
+// import RecipesContext from '../context/RecipesContext';
 
 function RecipeDetails() {
   const { id } = useParams();
@@ -20,7 +21,12 @@ function RecipeDetails() {
   const [alcoholicUrl, setAlcoholicUrl] = useState('');
   const [nationalityUrl, setNationalityUrl] = useState('');
   const [copyMessage, setCopyMessage] = useState('');
-  const [heartIcon, setHeartIcon] = useState(whiteHeartIcon);
+
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  const [heartIcon, setHeartIcon] = useState(favoriteRecipes.length === 0
+    ? whiteHeartIcon : blackHeartIcon);
+
+  // const { favoriteRecipe } = useContext(RecipesContext);
 
   const getIngredients = (data) => {
     const ingredientes = [];
@@ -78,6 +84,12 @@ function RecipeDetails() {
   const handleFavorite = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
+    // if (favoriteRecipes.length === 0) {
+    //   setHeartIcon(whiteHeartIcon);
+    // } else {
+    //   setHeartIcon(blackHeartIcon);
+    // }
+
     const favoriteRecipe = {
       id,
       type: '',
@@ -96,7 +108,6 @@ function RecipeDetails() {
       favoriteRecipe.alcoholicOrNot = alcoholicUrl;
     }
 
-    // Verifica se a receita já está nos favoritos pelo ID
     const recipeExists = favoriteRecipes.find(
       (favRecipe) => favRecipe.id === favoriteRecipe.id,
     );
@@ -107,7 +118,13 @@ function RecipeDetails() {
       setHeartIcon(blackHeartIcon);
       console.log('Receita adicionada aos favoritos.');
     } else {
+      const recipeIndex = favoriteRecipes.findIndex(
+        (favRecipe) => favRecipe.id === favoriteRecipe.id,
+      );
+      favoriteRecipes.splice(recipeIndex, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
       setHeartIcon(whiteHeartIcon);
+      console.log('Receita removida dos favoritos.');
     }
   };
 
@@ -146,6 +163,7 @@ function RecipeDetails() {
         <p>{copyMessage}</p>
 
         <button
+          src={ heartIcon }
           type="button"
           data-testid="favorite-btn"
           onClick={ handleFavorite }
