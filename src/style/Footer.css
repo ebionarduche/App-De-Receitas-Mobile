@@ -1,4 +1,15 @@
-footer {
+.footer-container {
+  background: linear-gradient(to top, #f7b831a2, #ffce3c21);
   bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  padding: 10px;
   position: fixed;
+  width: 100%;
+}
+
+.footer-container > button {
+  background-color: transparent;
+  border: none;
 }

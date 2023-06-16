@@ -17,9 +17,7 @@ function Profile() {
 
   return (
     <div>
-      <div>
-        <Header title="Profile" btnProfile />
-      </div>
+      <Header title="Profile" btnProfile />
       <div>
         {email && (
           <h1

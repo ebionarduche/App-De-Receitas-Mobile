@@ -2,11 +2,6 @@
   position: relative;
 }
 
-.container-content-recipe-details {
-  margin-top: 80%;
-  padding: 15px;
-}
-
 .overlay-recipe-details {
   background-color: rgba(0, 0, 0, 0.274);
   height: 280px;
@@ -22,10 +17,14 @@
   height: 280px;
   left: 0;
   object-fit: cover;
-  position: absolute;
   top: 0;
   width: 100%;
 }
+
+.container-content-recipe-details {
+  padding: 15px;
+}
+
 
 .title-container-recipe-details {
   align-items: center;
@@ -35,7 +34,7 @@
   font-size: 30px;
   position: absolute;
   top: 5%;
-  width: 90%;
+  width: 100%;
   z-index: 3;
 }
 
@@ -81,7 +80,7 @@
 }
 
 .button-play-recipes > button {
-  background: linear-gradient(to right, #f7b731, #ffcd3c);
+  background: linear-gradient(to top, #f7b731, #ffcd3c);
   border: none;
   border-radius: 30px;
   color: white;

@@ -15,6 +15,7 @@ function Footer() {
   return (
     <div>
       <footer
+        className="footer-container"
         data-testid="footer"
       >
         <button
@@ -31,8 +32,8 @@ function Footer() {
         >
           <img src={ food } alt="" />
         </button>
+
       </footer>
-      {/* <RecipeDetails /> */}
     </div>
   );
 }

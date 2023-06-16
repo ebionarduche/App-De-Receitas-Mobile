@@ -139,15 +139,6 @@ function RecipeDetails() {
 
   return (
     <div className="container-recipe-details">
-      <div className="overlay-recipe-details" />
-      {imageUrl && (
-        <img
-          className="img-recipe-details"
-          src={ imageUrl }
-          alt="Recipe"
-          data-testid="recipe-photo"
-        />
-      )}
       <div className="buttons-icon-container">
         <button
           type="button"
@@ -167,22 +158,31 @@ function RecipeDetails() {
           <img src={ heartIcon } alt="Heart Icon" />
         </button>
       </div>
+      <div className="overlay-recipe-details" />
+      {imageUrl && (
+        <img
+          className="img-recipe-details"
+          src={ imageUrl }
+          alt="Recipe"
+          data-testid="recipe-photo"
+        />
+      )}
+      <div className="title-container-recipe-details">
+        <h1 className="title-recipe-details">
+          {titleUrl}
+        </h1>
+        {url.includes('/meal') && titleUrl && (
+          <h2 data-testid="recipe-category">{categoryUrl}</h2>
+        )}
+
+        {url.includes('/drinks') && instructionsUrl && (
+          <p data-testid="recipe-category">{alcoholicUrl}</p>
+        )}
+      </div>
       <div
         className="container-content-recipe-details"
         data-testid="recipe-title"
       >
-        <div className="title-container-recipe-details">
-          <h1 className="title-recipe-details">
-            {titleUrl}
-          </h1>
-          {url.includes('/meal') && titleUrl && (
-            <h2 data-testid="recipe-category">{categoryUrl}</h2>
-          )}
-
-          {url.includes('/drinks') && instructionsUrl && (
-            <p data-testid="recipe-category">{alcoholicUrl}</p>
-          )}
-        </div>
         <h3 className="center-title">Ingredients</h3>
         {ingredientUrl.map((ingredient, index) => (
           <div key={ index }>

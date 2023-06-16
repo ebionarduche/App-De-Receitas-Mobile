@@ -1,8 +1,7 @@
 .container-ingredients {
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.5);
   display: flex;
-  width: 200px;
+  width: 100%;
 }
 
 
@@ -11,7 +10,6 @@
 }
 
 .container-content-recipe-progress {
-  margin-top: 80%;
   padding: 15px;
 }
 
@@ -30,7 +28,6 @@
   height: 280px;
   left: 0;
   object-fit: cover;
-  position: absolute;
   top: 0;
   width: 100%;
 }
@@ -41,10 +38,9 @@
   display: flex;
   flex-direction: column;
   font-size: 30px;
-  left: 5%;
   position: absolute;
   top: 5%;
-  width: 90%;
+  width: 100%;
   z-index: 3;
 }
 
@@ -82,7 +78,7 @@
 }
 
 .button-finish-recipes > button {
-  background: linear-gradient(to right, #f7b731, #ffcd3c);
+  background: linear-gradient(to top, #f7b731, #ffcd3c);
   border: none;
   border-radius: 30px;
   color: white;

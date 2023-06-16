@@ -160,17 +160,6 @@ function RecipeDetails() {
 
   return (
     <div className="container-recipe-progress">
-      <div className="overlay-recipe-progress" />
-      {
-        imageUrl && (
-          <img
-            className="img-recipe-progress"
-            src={ imageUrl }
-            alt="Recipe"
-            data-testid="recipe-photo"
-          />
-        )
-      }
       <div className="buttons-icon-container-recipe-progress ">
         <button type="button" data-testid="share-btn" onClick={ shareButton }>
           <img src={ shareIcon } alt="share icon" />
@@ -186,6 +175,17 @@ function RecipeDetails() {
         </button>
       </div>
 
+      <div className="overlay-recipe-progress" />
+      {
+        imageUrl && (
+          <img
+            className="img-recipe-progress"
+            src={ imageUrl }
+            alt="Recipe"
+            data-testid="recipe-photo"
+          />
+        )
+      }
       <div className="title-container-recipe-progress">
         <h1 className="title-recipe-progress" data-testid="recipe-title">{titleUrl}</h1>
         <h3 data-testid="recipe-category">{categoryUrl}</h3>
@@ -217,7 +217,7 @@ function RecipeDetails() {
           ))
         }
 
-        <h1>instructions</h1>
+        <h1>Instructions</h1>
         <p data-testid="instructions">{instructionsUrl}</p>
         <div>
           {url.includes('/meals') && videoUrl && (
