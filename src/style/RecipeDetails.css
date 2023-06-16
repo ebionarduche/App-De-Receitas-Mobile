@@ -3,12 +3,12 @@
 }
 
 .container-content-recipe-details {
-  margin-top: 75%;
-  padding: 10px;
+  margin-top: 80%;
+  padding: 15px;
 }
 
 .overlay-recipe-details {
-  background-color: rgba(0, 0, 0, 0.212);
+  background-color: rgba(0, 0, 0, 0.274);
   height: 280px;
   left: 0;
   position: absolute;
@@ -79,3 +79,13 @@
   display: flex;
   justify-content: center;
 }
+
+.button-play-recipes > button {
+  background: linear-gradient(to right, #f7b731, #ffcd3c);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
