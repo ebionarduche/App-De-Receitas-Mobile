@@ -159,12 +159,21 @@ function RecipeDetails() {
   };
 
   return (
-    <div>
-      <h1 data-testid="recipe-title">{titleUrl}</h1>
-      <div>
+    <div className="container-recipe-progress">
+      <div className="overlay-recipe-progress" />
+      {
+        imageUrl && (
+          <img
+            className="img-recipe-progress"
+            src={ imageUrl }
+            alt="Recipe"
+            data-testid="recipe-photo"
+          />
+        )
+      }
+      <div className="buttons-icon-container-recipe-progress ">
         <button type="button" data-testid="share-btn" onClick={ shareButton }>
           <img src={ shareIcon } alt="share icon" />
-          Compartilhar
         </button>
         <p>{ clipboarded ? 'Link copied!' : '' }</p>
 
@@ -174,65 +183,63 @@ function RecipeDetails() {
             src={ favorited ? blackHeartIcon : whiteHeartIcon }
             alt="favorite icon"
           />
-          Favoritar
         </button>
       </div>
 
-      <h3 data-testid="recipe-category">{categoryUrl}</h3>
-      <h2>Ingredients</h2>
-
-      {
-        ingredientUrl.map((ingredient, index) => (
-          <label
-            className="container-ingredients"
-            data-testid={ `${index}-ingredient-step` }
-            htmlFor={ `checkbox-${index}` }
-            key={ index }
-            style={ checkedIngredients.includes(ingredient)
-              ? { textDecoration: 'line-through', color: 'black' } : {} }
-          >
-            <input
-              type="checkbox"
-              value={ ingredient }
-              onChange={ (e) => handleCheckboxChange(e) }
-              id={ `checkbox-${index}` }
-              name={ `checkbox-${index}` }
-              defaultChecked={ checkedIngredients.includes(ingredient) }
-            />
-            {ingredient}
-          </label>
-        ))
-      }
-
-      <h1>instructions</h1>
-      <p data-testid="instructions">{instructionsUrl}</p>
-      <div>
-        {url.includes('/meals') && videoUrl && (
-          <track
-            data-testid="video"
-            width="420"
-            height="315"
-            src={ videoUrl }
-          />
-        )}
+      <div className="title-container-recipe-progress">
+        <h1 className="title-recipe-progress" data-testid="recipe-title">{titleUrl}</h1>
+        <h3 data-testid="recipe-category">{categoryUrl}</h3>
       </div>
-      {imageUrl && (
-        <img
-          className="img-recipe"
-          src={ imageUrl }
-          alt="Recipe"
-          data-testid="recipe-photo"
-        />
-      )}
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ !allIngredientsChecked }
-        onClick={ finishButton }
-      >
-        Finish Recipe
-      </button>
+      <div className="container-content-recipe-progress">
 
+        <h2>Ingredients</h2>
+
+        {
+          ingredientUrl.map((ingredient, index) => (
+            <label
+              className="container-ingredients"
+              data-testid={ `${index}-ingredient-step` }
+              htmlFor={ `checkbox-${index}` }
+              key={ index }
+              style={ checkedIngredients.includes(ingredient)
+                ? { textDecoration: 'line-through', color: 'black' } : {} }
+            >
+              <input
+                type="checkbox"
+                value={ ingredient }
+                onChange={ (e) => handleCheckboxChange(e) }
+                id={ `checkbox-${index}` }
+                name={ `checkbox-${index}` }
+                defaultChecked={ checkedIngredients.includes(ingredient) }
+              />
+              {ingredient}
+            </label>
+          ))
+        }
+
+        <h1>instructions</h1>
+        <p data-testid="instructions">{instructionsUrl}</p>
+        <div>
+          {url.includes('/meals') && videoUrl && (
+            <track
+              data-testid="video"
+              width="420"
+              height="315"
+              src={ videoUrl }
+            />
+          )}
+        </div>
+      </div>
+      <div className="button-finish-recipes">
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ !allIngredientsChecked }
+          onClick={ finishButton }
+        >
+          Finish Recipe
+        </button>
+      </div>
     </div>
 
   );

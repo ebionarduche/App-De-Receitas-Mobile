@@ -4,3 +4,89 @@
   display: flex;
   width: 200px;
 }
+
+
+.container-recipe-progress {
+  position: relative;
+}
+
+.container-content-recipe-progress {
+  margin-top: 80%;
+  padding: 15px;
+}
+
+.overlay-recipe-progress {
+  background-color: rgba(0, 0, 0, 0.274);
+  height: 280px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+
+}
+
+.img-recipe-progress {
+  height: 280px;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.title-container-recipe-progress {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+  left: 5%;
+  position: absolute;
+  top: 5%;
+  width: 90%;
+  z-index: 3;
+}
+
+.title-recipe-progress {
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  top: 5%;
+  z-index: 2;
+}
+
+.buttons-icon-container-recipe-progress {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+.buttons-icon-container-recipe-progress > button {
+  background-color: rgba(255, 255, 255, 0.541);
+  border: none;
+  border-radius: 50%;
+  flex-direction: row;
+  margin: 10px;
+  padding: 10px;
+  z-index: 3;
+}
+
+
+.button-finish-recipes {
+  display: flex;
+  justify-content: center;
+}
+
+.button-finish-recipes > button {
+  background: linear-gradient(to right, #f7b731, #ffcd3c);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
