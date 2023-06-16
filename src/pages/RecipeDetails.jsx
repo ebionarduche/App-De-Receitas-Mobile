@@ -139,6 +139,7 @@ function RecipeDetails() {
 
   return (
     <div className="container-recipe-details">
+      <div className="overlay-recipe-details" />
       {imageUrl && (
         <img
           className="img-recipe-details"
