@@ -4,7 +4,7 @@
 
 .container-content-recipe-details {
   margin-top: 75%;
-  padding: 20px;
+  padding: 10px;
 }
 
 .overlay-recipe-details {
@@ -15,6 +15,7 @@
   top: 0;
   width: 100%;
   z-index: 1;
+
 }
 
 .img-recipe-details {
@@ -26,20 +27,43 @@
   width: 100%;
 }
 
-.title-recipe-details {
+.title-container-recipe-details {
+  align-items: center;
   color: white;
   display: flex;
+  flex-direction: column;
   font-size: 30px;
-  left: 10px;
   position: absolute;
-  right: 10px;
   top: 5%;
+  width: 90%;
+  z-index: 3;
+}
+
+.title-recipe-details {
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  top: 5%;
+  z-index: 2;
 }
 
 .buttons-icon-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+.buttons-icon-container > button {
+  background-color: rgba(255, 255, 255, 0.541);
+  border: none;
+  border-radius: 50%;
+  flex-direction: row;
+  margin: 10px;
+  padding: 10px;
+  z-index: 2;
 }
 
 .video-recipe-details {

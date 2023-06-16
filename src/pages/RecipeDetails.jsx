@@ -148,38 +148,40 @@ function RecipeDetails() {
           data-testid="recipe-photo"
         />
       )}
+      <div className="buttons-icon-container">
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ handleShare }
+        >
+          <img src={ shareIcon } alt="share icon" />
+        </button>
+        <p>{copyMessage}</p>
+
+        <button
+          src={ heartIcon }
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ handleFavorite }
+        >
+          <img src={ heartIcon } alt="Heart Icon" />
+        </button>
+      </div>
       <div
         className="container-content-recipe-details"
         data-testid="recipe-title"
       >
-        <h1 className="title-recipe-details">
-          {titleUrl}
-        </h1>
-        {url.includes('/meal') && titleUrl && (
-          <h2 className="center-title" data-testid="recipe-category">{categoryUrl}</h2>
-        )}
+        <div className="title-container-recipe-details">
+          <h1 className="title-recipe-details">
+            {titleUrl}
+          </h1>
+          {url.includes('/meal') && titleUrl && (
+            <h2 data-testid="recipe-category">{categoryUrl}</h2>
+          )}
 
-        {url.includes('/drinks') && instructionsUrl && (
-          <p data-testid="recipe-category">{alcoholicUrl}</p>
-        )}
-        <div className="buttons-icon-container">
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ handleShare }
-          >
-            <img src={ shareIcon } alt="share icon" />
-          </button>
-          <p>{copyMessage}</p>
-
-          <button
-            src={ heartIcon }
-            type="button"
-            data-testid="favorite-btn"
-            onClick={ handleFavorite }
-          >
-            <img src={ heartIcon } alt="Heart Icon" />
-          </button>
+          {url.includes('/drinks') && instructionsUrl && (
+            <p data-testid="recipe-category">{alcoholicUrl}</p>
+          )}
         </div>
         <h3 className="center-title">Ingredients</h3>
         {ingredientUrl.map((ingredient, index) => (
@@ -203,8 +205,8 @@ function RecipeDetails() {
             <iframe
               title="youtube-player"
               data-testid="video"
-              width="250"
-              // height="315"
+              width="300"
+              height="220"
               src={ videoUrl.replace('watch?v=', 'embed/') }
             />
           )}
