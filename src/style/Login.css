@@ -17,8 +17,43 @@
 }
 
 .form-login {
-  background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade */
-  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.753);
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px;
+  text-align: center;
   z-index: 1;
+}
 
+.form-login > input {
+  background-color: rgba(255, 255, 255, 0.534);
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.form-login > input::placeholder {
+  color: #999;
+}
+
+.form-login > button {
+  background: linear-gradient(to top, #f7b731, #ffcd3c);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 10px 30px;
+}
+
+.form-login > button:disabled {
+  background: linear-gradient(to top, #f7b831a4, #f5cc5081);
+  cursor: not-allowed;
 }

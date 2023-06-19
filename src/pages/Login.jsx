@@ -49,6 +49,8 @@ function Login() {
           value={ values.password }
           onChange={ handleInputChange }
         />
+
+        <a href="https://www.gov.br/agricultura/pt-br/assuntos/riscos-seguro/imagens/em_construao.png/@@images/image.png">Forgot your password</a>
         <button
           data-testid="login-submit-btn"
           type="button"
