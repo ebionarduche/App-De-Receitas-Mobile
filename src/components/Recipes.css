@@ -1,20 +1,103 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   align-items: center;
   display: flex;
   flex-direction: column;
   margin-top: 100px;
-  max-height: 640px;
+  max-height: 100%;
   max-width: 340px;
 }
 
 .buttons-container {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
 }
 
-.category-button {
+.buttons-container > div > button {
   background-color: transparent;
   border: none;
+}
+
+.buttons-container > div > button > div {
+  font-size: 0.9em;
+}
+
+
+.btn-category-all {
+  align-items: flex-end;
+  background-image: url('../images/icons/all.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  display: flex;
+  height: 75px;
+  justify-content: center;
+  width: 60px;
+}
+
+.btn-category-beef {
+  align-items: flex-end;
+  background-image: url('../images/icons/beef.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  display: flex;
+  height: 75px;
+  justify-content: center;
+  width: 60px;
+}
+
+.btn-category-breakfast {
+  align-items: flex-end;
+  background-image: url('../images/icons/breakfast.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  display: flex;
+  height: 75px;
+  justify-content: center;
+  width: 60px;
+}
+
+.btn-category-chicken {
+  align-items: flex-end;
+  background-image: url('../images/icons/chicken.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  display: flex;
+  height: 75px;
+  justify-content: center;
+  width: 60px;
+}
+
+.btn-category-dessert {
+  align-items: flex-end;
+  background-image: url('../images/icons/dessert.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  display: flex;
+  height: 75px;
+  justify-content: center;
+  width: 60px;
+}
+
+.btn-category-goat {
+  align-items: flex-end;
+  background-image: url('../images/icons/goat.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 85%;
+  display: flex;
+  height: 75px;
+  justify-content: center;
   width: 60px;
 }
 
@@ -47,6 +130,8 @@
 }
 
 .custom-button > img {
+  border-radius: 10%;
   height: auto;
   width: 100%;
 }
+

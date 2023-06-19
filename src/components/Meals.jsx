@@ -62,28 +62,38 @@ function Meals() {
   return (
     <div className="container">
       <Header title="Meals" btnProfile btnSearch />
-      <div className="buttons-container">
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          value="All"
-          onClick={ ({ target }) => selectCategory(target.value) }
-        >
-          All
-        </button>
+
+      <section className="buttons-container">
+        <div>
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            value="All"
+            onClick={ ({ target }) => selectCategory(target.value) }
+          >
+            <div className="btn-category-all">
+              All
+            </div>
+          </button>
+        </div>
         {
           renderCategory.map(({ strCategory }, index) => (
-            <button
+            <div
               key={ strCategory + index }
-              className="category-button"
-              data-testid={ `${strCategory}-category-filter` }
-              onClick={ () => selectCategory(strCategory) }
             >
-              {strCategory}
-            </button>
+              <button
+                data-testid={ `${strCategory}-category-filter` }
+                onClick={ () => selectCategory(strCategory) }
+              >
+                <div className={ `btn-category-${strCategory.toLowerCase()}` }>
+                  {strCategory}
+                </div>
+              </button>
+            </div>
           ))
         }
-      </div>
+      </section>
+
       <div className="cards-container">
         {
           isLoading ? (

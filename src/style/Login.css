@@ -1,0 +1,24 @@
+.background-image-login {
+  background-image: url('../images/background.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.login-container {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  position: relative;
+}
+
+.form-login {
+  background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade */
+  padding: 20px;
+  z-index: 1;
+
+}
