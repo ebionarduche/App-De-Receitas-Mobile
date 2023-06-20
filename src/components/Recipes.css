@@ -107,7 +107,7 @@
 
 .btn-category-all-drinks {
   align-items: flex-end;
-  background-image: url('../images/icons/all.png');
+  background-image: url('../images/icons/all-drink.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 85%;
@@ -119,7 +119,7 @@
 
 .btn-category-ordinary {
   align-items: flex-end;
-  background-image: url('../images/icons/goat.png');
+  background-image: url('../images/icons/ordinary.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 85%;
@@ -131,7 +131,7 @@
 
 .btn-category-cocktail {
   align-items: flex-end;
-  background-image: url('../images/icons/goat.png');
+  background-image: url('../images/icons/cocktail.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 85%;
@@ -143,7 +143,7 @@
 
 .btn-category-shake {
   align-items: flex-end;
-  background-image: url('../images/icons/goat.png');
+  background-image: url('../images/icons/shake.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 85%;
@@ -155,7 +155,7 @@
 
 .btn-category-cocoa {
   align-items: flex-end;
-  background-image: url('../images/icons/dessert.png');
+  background-image: url('../images/icons/cocoa.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 85%;
@@ -168,7 +168,7 @@
 
 .btn-category-other.unknown {
   align-items: flex-end;
-  background-image: url('../images/icons/dessert.png');
+  background-image: url('../images/icons/other-unknown.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 85%;

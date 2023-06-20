@@ -57,7 +57,7 @@ function Header({ title, btnProfile, btnSearch }) {
         searchBar && <SearchBar />
       }
       <div className="title-container">
-        <h1 data-testid="page-title">{title}</h1>
+        <h1 data-testid="page-title">{title.toUpperCase()}</h1>
       </div>
     </div>
   );
