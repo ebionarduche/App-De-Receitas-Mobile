@@ -1,10 +1,11 @@
 .recipe-card-container {
-  border: 1px solid black;
-  border-radius: 10px;
+  background-color: #f6f6f6;
+  border: 1.5px solid rgb(126, 123, 123);
+  border-radius: 15px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   display: flex;
+  height: 200px;
   margin: 15px;
-
 }
 
 .recipe-card-container > button {
@@ -13,19 +14,47 @@
 }
 
 .recipe-card-container > button > img {
-  height: 100px;
-  width: 60%;
+  height: 100%;
+  width: 150px;
 }
 
 .recipe-card-container-info {
   padding: 10px;
 }
 
+.recipe-card-container-info > button {
+  background-color: transparent;
+  border: none;
+}
+
+.recipe-card-container-info > button > h1 {
+  font-size: 22px;
+}
+
+
+.recipe-card-button-container > button {
+  background-color: transparent;
+  border: none;
+  margin-top: 10%;
+}
+
+.recipe-card-button-container > button:nth-child( 2 ) {
+  margin-left: 5px;
+}
+
 .ingredients-tags {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .ingredients-tags > p {
-  margin: 5px;
+  flex-basis: 30%;
+  margin-bottom: 0;
+  margin-left: 6px;
+  margin-top: 0;
+}
+
+.ingredients-tags > p:nth-child( 2n+1 ) {
+  clear: both;
 }
 
