@@ -27,7 +27,6 @@ function Profile() {
           {email && (
             <h1 data-testid="profile-email">
               {email.email}
-
             </h1>
           )}
         </div>

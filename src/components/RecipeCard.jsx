@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import RecipesContext from '../context/RecipesContext';
+import './RecipeCard.css';
 
 import shareIcon from '../images/shareIcon.svg';
 
@@ -51,7 +52,7 @@ export default function RecipeCard({ index, recipe, reload }) {
   };
 
   return (
-    <div>
+    <div className="recipe-card-container">
       <button
         onClick={ goToDetails }
         data-testid={ `${index}-horizontal-image` }
@@ -60,42 +61,48 @@ export default function RecipeCard({ index, recipe, reload }) {
       >
         <img src={ image } alt={ name } width="100px" />
       </button>
-      <p
-        data-testid={ `${index}-horizontal-top-text` }
-      >
-        { type === 'drink' ? alcoholicOrNot : `${nationality} - ${category}` }
-      </p>
-      <button
-        onClick={ goToDetails }
-        data-testid={ `${index}-horizontal-name` }
-      >
-        { name }
-      </button>
-      <p
-        data-testid={ `${index}-horizontal-done-date` }
-      >
-        { doneDate }
-      </p>
-      { tagsP }
-      <button
-        onClick={ shareButton }
-        data-testid={ `${index}-horizontal-share-btn` }
-        src={ shareIcon }
-        alt="share"
-      >
-        <img src={ shareIcon } alt="share-icon" />
-      </button>
-      <button onClick={ favoriteButton }>
-        <img
-          data-testid={ `${index}-horizontal-favorite-btn` }
-          src={ checkFavorited(id, type) ? blackHeartIcon : whiteHeartIcon }
-          alt="favorite icon"
-        />
-        Favoritar
-      </button>
-      <p>
-        { clip ? 'Link copied!' : '' }
-      </p>
+      <section className="recipe-card-container-info">
+
+        <button
+          onClick={ goToDetails }
+          data-testid={ `${index}-horizontal-name` }
+        >
+          { name }
+        </button>
+
+        <p data-testid={ `${index}-horizontal-top-text` }>
+          { type === 'drink' ? alcoholicOrNot : `${nationality} - ${category}` }
+        </p>
+
+        <p
+          data-testid={ `${index}-horizontal-done-date` }
+        >
+          { doneDate }
+        </p>
+
+        <button
+          onClick={ shareButton }
+          data-testid={ `${index}-horizontal-share-btn` }
+          src={ shareIcon }
+          alt="share"
+        >
+          <img src={ shareIcon } alt="share-icon" />
+        </button>
+        <button onClick={ favoriteButton }>
+          <img
+            data-testid={ `${index}-horizontal-favorite-btn` }
+            src={ checkFavorited(id, type) ? blackHeartIcon : whiteHeartIcon }
+            alt="favorite icon"
+          />
+          Favoritar
+        </button>
+        <p>
+          { clip ? 'Link copied!' : '' }
+        </p>
+        <section className="ingredients-tags">
+          { tagsP }
+        </section>
+      </section>
     </div>
   );
 }

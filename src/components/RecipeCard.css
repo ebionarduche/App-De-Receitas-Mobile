@@ -1,0 +1,31 @@
+.recipe-card-container {
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  margin: 15px;
+
+}
+
+.recipe-card-container > button {
+  background-color: transparent;
+  border: none;
+}
+
+.recipe-card-container > button > img {
+  height: 100px;
+  width: 60%;
+}
+
+.recipe-card-container-info {
+  padding: 10px;
+}
+
+.ingredients-tags {
+  display: flex;
+}
+
+.ingredients-tags > p {
+  margin: 5px;
+}
+
