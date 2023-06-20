@@ -1,0 +1,29 @@
+.profile-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 150px;
+}
+
+.profile-container > button {
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid black;
+  padding: 20px;
+  width: 40%;
+}
+
+.profile-container > div > h1 {
+  color: rgb(59, 59, 59);
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.profile-container > div {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.profile-container > button > div > img {
+  margin-right: 5px;
+}
