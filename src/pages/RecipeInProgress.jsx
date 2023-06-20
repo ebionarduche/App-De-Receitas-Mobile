@@ -136,7 +136,6 @@ function RecipeDetails() {
 
     setFavorited(favoriteRecipe(recipe));
   };
-
   const finishButton = () => {
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     const recipe = {
@@ -157,7 +156,6 @@ function RecipeDetails() {
     }
     history.push('/done-recipes');
   };
-
   return (
     <div className="container-recipe-progress">
       <div className="buttons-icon-container-recipe-progress ">
@@ -191,9 +189,7 @@ function RecipeDetails() {
         <h3 data-testid="recipe-category">{categoryUrl}</h3>
       </div>
       <div className="container-content-recipe-progress">
-
-        <h2>Ingredients</h2>
-
+        <h1>Ingredients</h1>
         {
           ingredientUrl.map((ingredient, index) => (
             <label
@@ -216,9 +212,8 @@ function RecipeDetails() {
             </label>
           ))
         }
-
         <h1>Instructions</h1>
-        <p data-testid="instructions">{instructionsUrl}</p>
+        <p>{instructionsUrl}</p>
         <div>
           {url.includes('/meals') && videoUrl && (
             <track
@@ -241,10 +236,7 @@ function RecipeDetails() {
         </button>
       </div>
     </div>
-
   );
 }
-
-//
 
 export default RecipeDetails;

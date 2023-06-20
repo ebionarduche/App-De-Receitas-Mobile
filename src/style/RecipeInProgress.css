@@ -1,12 +1,45 @@
 .container-ingredients {
   align-items: center;
   display: flex;
-  width: 100%;
+  margin-bottom: 10px;
+}
+
+.container-ingredients input {
+  appearance: none;
+  border: 2px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 20px;
+  margin-right: 10px;
+  width: 20px;
+}
+
+.container-ingredients input:checked {
+  background-color: black;
+}
+
+.container-ingredients input:checked:after {
+  background-color: white;
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 8px;
+  margin: 4px;
+  width: 8px;
+}
+
+.container-ingredients label {
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 
 .container-recipe-progress {
   position: relative;
+}
+
+.container-recipe-progress > div > h1  {
+  text-align: center;
 }
 
 .container-content-recipe-progress {

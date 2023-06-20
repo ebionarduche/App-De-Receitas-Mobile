@@ -198,8 +198,9 @@ function RecipeDetails() {
           </div>
         ))}
         <h3 className="center-title">Instructions</h3>
-        <p data-testid="instructions">{instructionsUrl}</p>
-
+        {instructionsUrl.split('.').map((sentence, index) => (
+          <p key={ index }>{sentence}</p>
+        ))}
         <div className="video-recipe-details">
           {url.includes('/meals') && videoUrl && (
             <iframe
