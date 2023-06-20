@@ -8,6 +8,13 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 - quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
 - quais arquivos/pastas foram desenvolvidos pela Trybe.
 -->
+## 📱 Aplicação Mobile
+
+⚠️ **Atenção: Esta aplicação é exclusivamente para dispositivos móveis.** ⚠️
+
+📱 Recomendamos acessá-la em smartphones ou tablets para a melhor experiência de usuário. 
+
+
 # <span style="color:#F16B6F">Receitas App</span>
 
 ![Receitas App](/src//images/logoRecipes.svg)
@@ -59,10 +66,10 @@ Durante o desenvolvimento deste projeto, foram utilizadas as seguintes ferrament
 
 Gostaríamos de agradecer e destacar a incrível equipe de desenvolvedores que contribuíram para a construção deste projeto:
 
-- Taline Chuman
-- Gabriel Pereira
-- Li Hong
-- Pedro Henrique
+- @talinechuman
+- @hongllqi
+- @GapNeves
+- @pedro-hc
 
 ## Próximos Passos
 
@@ -73,5 +80,7 @@ O projeto ainda está em construção e temos planos de adicionar novas funciona
 - Implementação de tecnologias adicionais para tornar o uso do aplicativo ainda mais agradável e intuitivo.
 
 Esperamos que você aproveite o <span style="color:#F16B6F">Receitas App</span> e tenha uma ótima experiência culinária!
+
+Este projeto foi desenvolvido durante meus estudos na @Trybe, minha escola de programação. A Trybe proporcionou o ambiente e a estrutura necessários para aprimorar minhas habilidades em programação e trabalhar em projetos práticos como este
 
 ![Receitas App Logo](/src/images/recipeApp.svg)
