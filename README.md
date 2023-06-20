@@ -66,10 +66,10 @@ Durante o desenvolvimento deste projeto, foram utilizadas as seguintes ferrament
 
 Gostaríamos de agradecer e destacar a incrível equipe de desenvolvedores que contribuíram para a construção deste projeto:
 
-- @talinechuman
-- @hongllqi
-- @GapNeves
-- @pedro-hc
+- @Taline Chuman
+- Hong Li
+- Gabriel Pereira
+- Pedro Henrique
 
 ## Próximos Passos
 
