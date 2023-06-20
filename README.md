@@ -10,7 +10,7 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 -->
 # <span style="color:#F16B6F">Receitas App</span>
 
-![Receitas App](/src/images/recipeApp.svg)
+![Receitas App](/src//images/logoRecipes.svg)
 
 ## Descrição
 
@@ -74,4 +74,4 @@ O projeto ainda está em construção e temos planos de adicionar novas funciona
 
 Esperamos que você aproveite o <span style="color:#F16B6F">Receitas App</span> e tenha uma ótima experiência culinária!
 
-![Receitas App Logo](app_logo.png)
+![Receitas App Logo](/src/images/recipeApp.svg)
