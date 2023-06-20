@@ -1,0 +1,9 @@
+.save-recipes-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.save-recipes-container > button {
+  background-color: transparent;
+  border: none;
+}

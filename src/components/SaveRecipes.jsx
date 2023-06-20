@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import RecipeCard from './RecipeCard';
+import './SaveRecipes.css';
 
 function SaveRecipes({ title, localKey }) {
   const getLocal = JSON.parse(localStorage.getItem(localKey));
@@ -46,25 +47,33 @@ function SaveRecipes({ title, localKey }) {
 
   return (
     <div>
-      <Header title={ title } btnProfile />
-      <button
-        onClick={ () => (buttonSetFilter('all')) }
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
-      <button
-        onClick={ () => (buttonSetFilter('meal')) }
-        data-testid="filter-by-meal-btn"
-      >
-        Meals
-      </button>
-      <button
-        onClick={ () => (buttonSetFilter('drink')) }
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
+      <div className="save-recipes-container">
+        <Header title={ title } btnProfile />
+        <button
+          onClick={ () => (buttonSetFilter('all')) }
+          data-testid="filter-by-all-btn"
+        >
+          <div>
+            All
+          </div>
+        </button>
+        <button
+          onClick={ () => (buttonSetFilter('meal')) }
+          data-testid="filter-by-meal-btn"
+        >
+          <div>
+            Meals
+          </div>
+        </button>
+        <button
+          onClick={ () => (buttonSetFilter('drink')) }
+          data-testid="filter-by-drink-btn"
+        >
+          <div>
+            Drinks
+          </div>
+        </button>
+      </div>
       { recipeCards }
     </div>
   );
