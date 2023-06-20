@@ -5,6 +5,7 @@ import SearchContext from '../context/SearchContext';
 import Footer from './Footer';
 import Header from './Header';
 import Card from './Card';
+import './Recipes.css';
 
 function Drinks() {
   const [renderCategory, setRenderCategory] = useState([]); // Renderiza os botões
@@ -62,15 +63,19 @@ function Drinks() {
   return (
     <div className="container">
       <Header title="Drinks" btnProfile btnSearch />
-      <div className="buttons-container">
-        <button
-          type="button"
-          data-testid="All-category-filter"
-          value="All"
-          onClick={ ({ target }) => selectCategory(target.value) }
-        >
-          All
-        </button>
+      <section className="buttons-container">
+        <div>
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            value="All"
+            onClick={ ({ target }) => selectCategory(target.value) }
+          >
+            <div className="btn-category-all-drinks">
+              All
+            </div>
+          </button>
+        </div>
         {
           renderCategory.map(({ strCategory }, index) => (
             <button
@@ -79,11 +84,13 @@ function Drinks() {
               data-testid={ `${strCategory}-category-filter` }
               onClick={ () => selectCategory(strCategory) }
             >
-              {strCategory}
+              <div className={ `btn-category-${strCategory.toLowerCase()}` }>
+                {strCategory}
+              </div>
             </button>
           ))
         }
-      </div>
+      </section>
       <div className="cards-container">
         {
           isLoading ? 'Carregando...' : (

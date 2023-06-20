@@ -62,7 +62,6 @@ function Meals() {
   return (
     <div className="container">
       <Header title="Meals" btnProfile btnSearch />
-
       <section className="buttons-container">
         <div>
           <button
